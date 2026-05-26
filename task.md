@@ -1,0 +1,56 @@
+# 개발 작업 진행 현황 (냉장고 파먹기 AI 시스템)
+
+- `[x]` **1단계: 프로젝트 초기 세팅**
+  - `[x]` 작업 디렉토리 생성 (Spring Boot & Python 분리 구조)
+  - `[x]` Spring Boot 기본 의존성 (Web, Lombok, DevTools, JdbcTemplate, Thymeleaf, Security) 설정
+    - `build.gradle`, `settings.gradle`, `gradle-wrapper.properties`, `gradlew.bat`, `gradlew` 생성
+    - `src/main/resources/application.yml` 생성
+- `[x]` **2단계: 회원가입 및 로그인**
+  - `[x]` DB 테이블(User) 생성
+    - `src/main/resources/sql/schema.sql` — recipekr DB, users 테이블, 인덱스, 기본 admin 계정
+  - `[x]` 세션 기반 로그인 로직 및 화면 구현
+    - **도메인**: `User.java` — Lombok 빌더 패턴, JdbcTemplate 호환 순수 엔티티
+    - **DTO**: `SignupDto.java` (Bean Validation), `LoginDto.java`
+    - **Repository**: `UserRepository.java` — JdbcTemplate CRUD, RowMapper, 중복 체크
+    - **Service**: `UserService.java` — BCrypt 암호화, 회원가입/조회 로직
+    - **Service**: `CustomUserDetailsService.java` — Spring Security 인증 연동
+    - **Config**: `SecurityConfig.java` — Form Login, 세션 관리, 접근 권한 설정
+    - **Controller**: `AuthController.java` — 로그인/회원가입 GET·POST, 리다이렉트 패턴
+    - **Controller**: `HomeController.java` — 메인 홈 페이지
+    - **Template**: `auth/login.html` — 2패널 레이아웃, 비밀번호 토글, 로딩 상태
+    - **Template**: `auth/signup.html` — 실시간 강도 측정, 비밀번호 일치 확인
+    - **Template**: `index.html` — 히어로 섹션, 기능 소개 카드
+    - **CSS**: `static/css/global.css` — 다크 테마 디자인 시스템 (CSS 변수, 컴포넌트)
+    - **CSS**: `static/css/auth.css` — 인증 페이지 전용 (블롭 애니메이션, 2패널)
+- `[ ]` **3단계: 레시피 데이터베이스 연동**
+  - `[ ]` 레시피 테이블 스키마 생성 및 초기 데이터 적재
+  - `[ ]` JdbcTemplate 활용 데이터 접근 계층(DAO) 구현
+- `[ ]` **4단계: Python AI 추천 모델 개발**
+  - `[ ]` Python 3.11 가상환경 구성 및 패키지 설정
+  - `[ ]` Scikit-learn(TF-IDF, Cosine Similarity) 활용 추천 코드 작성
+  - `[ ]` 모델 직렬화(`model.pkl`) 저장 로직 구성
+- `[x]` **5단계: RPA 자동화 크롤러 개발**
+  - `[x]` DB 스키마: `discount_schema.sql` — market_discount 테이블 (UNIQUE KEY UPSERT 설계)
+  - `[x]` Python 크롤러 모듈:
+    - `python-ai/crawler/emart_crawler.py` — 이마트 Playwright 크롤러
+    - `python-ai/crawler/lottemart_crawler.py` — 롯데마트 Playwright 크롤러
+    - `python-ai/crawler/homeplus_crawler.py` — 홈플러스 Playwright 크롤러
+    - `python-ai/crawler/run_crawler.py` — 3사 통합 실행 + DB UPSERT 저장 메인 스크립트
+  - `[x]` Java 백엔드:
+    - `domain/DiscountItem.java` — 할인 식재료 도메인 엔티티
+    - `repository/DiscountItemRepository.java` — JdbcTemplate CRUD (UPSERT, 조회, 정리)
+    - `service/DiscountCrawlerService.java` — ProcessBuilder로 크롤러 실행 + AI 연동
+    - `service/CrawlerScheduler.java` — @Scheduled 매일 새벽 1시 자동 크롤링
+  - `[x]` `requirements.txt` — playwright, mysql-connector-python 추가
+  - `[x]` `RecipekrApplication.java` — @EnableScheduling 추가
+- `[ ]` **6단계: 백엔드 통합 (Spring ↔ Python 연동)**
+  - `[ ]` `ProcessBuilder`를 통한 Python 스크립트 실행 및 JSON 파싱 유틸리티 개발
+  - `[ ]` 냉장고 재료 기반 추천 API 엔드포인트 완성
+- `[ ]` **7단계: 프론트엔드 (화면 렌더링)**
+  - `[ ]` Bootstrap + Thymeleaf 메인 화면 (할인 식재료 노출, 사용자 입력 폼)
+  - `[ ]` 레시피 추천 결과 시각화
+- `[ ]` **8단계: Docker 배포 스크립트 작성**
+  - `[ ]` Java + Python + Chrome이 통합된 단일 `Dockerfile` 작성
+- `[ ]` **9단계: AWS 배포 및 MLOps 파이프라인 연동**
+  - `[ ]` EC2(t3.micro) Swap 메모리 세팅 
+  - `[ ]` GitHub Actions 자동 배포 파이프라인(`.github/workflows/deploy.yml`) 구현

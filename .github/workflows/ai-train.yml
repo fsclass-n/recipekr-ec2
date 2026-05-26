@@ -1,0 +1,44 @@
+name: AI Model Training (Gemini Embeddings)
+
+on:
+  push:
+    paths:
+      - 'python-ai/data/recipes.csv'
+      - 'python-ai/train.py'
+  schedule:
+    - cron: '0 0 * * *'  # 매일 자정 실행
+  workflow_dispatch:      # 수동 실행 지원
+
+jobs:
+  train-model:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 저장소 체크아웃
+        uses: actions/checkout@v4
+
+      - name: Python 환경 설정
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: 의존성 패키지 설치
+        run: |
+          cd python-ai
+          pip install -r requirements.txt
+
+      - name: 제미나이 AI 모델 학습 (임베딩 생성)
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          cd python-ai
+          python train.py
+
+      - name: 변경된 임베딩 모델 커밋 및 푸시
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add python-ai/models/*.pkl
+          git commit -m "🤖 [AI] 모델 임베딩 자동 업데이트 완료" || echo "No changes to commit"
+          git push

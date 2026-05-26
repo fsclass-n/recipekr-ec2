@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="냉장고 레시피 AI 레시피 추천 - 회원가입">
+    <title>회원가입 | 냉장고 레시피</title>
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <!-- Global CSS -->
+    <link rel="stylesheet" th:href="@{/css/global.css?v=20}">
+    <!-- Page CSS -->
+    <link rel="stylesheet" th:href="@{/css/auth.css}">
+</head>
+<body class="auth-body">
+
+<!-- ─── NAVBAR ─── -->
+<nav class="navbar navbar-expand-lg navbar-dark sticky-top" id="mainNavbar">
+    <div class="container">
+        <a class="navbar-brand d-flex align-items-center gap-2" th:href="@{/}">
+            <span class="brand-icon"><img src="/images/icons/plate.svg" alt="로고"></span>
+            <span class="brand-text">냉장고 레시피</span>
+        </a>
+        <button class="navbar-toggler border-0" type="button"
+                data-bs-toggle="collapse" data-bs-target="#navbarContent">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarContent">
+            <ul class="navbar-nav desktop-nav-pill me-auto mb-2 mb-lg-0 gap-2">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/}">
+                        <i class="bi bi-house-door me-1"></i>홈
+                    </a>
+                </li>
+                <li class="nav-item" sec:authorize="isAuthenticated()">
+                    <a class="nav-link" th:href="@{/recipe/recommend}">
+                        <i class="bi bi-stars me-1"></i>레시피 추천
+                    </a>
+                </li>
+            </ul>
+            <div class="d-flex align-items-center gap-2">
+                <div sec:authorize="isAnonymous()" class="d-flex gap-2">
+                    <a th:href="@{/auth/login}" class="btn btn-outline-light btn-sm px-3">
+                        <i class="bi bi-box-arrow-in-right me-1"></i>로그인
+                    </a>
+                    <a th:href="@{/auth/signup}" class="btn btn-accent btn-sm px-3">
+                        <i class="bi bi-person-plus me-1"></i>회원가입
+                    </a>
+                </div>
+                <div sec:authorize="isAuthenticated()" class="d-flex align-items-center gap-3">
+                    <span class="text-white-50 d-none d-md-inline">
+                        <i class="bi bi-person-circle me-1"></i>
+                        <span sec:authentication="principal.nickname">사용자</span>님
+                    </span>
+                    <a th:href="@{/mypage}" class="btn btn-outline-info btn-sm px-3 ms-2">
+                        <i class="bi bi-person-badge me-1"></i>마이페이지
+                    </a>
+                    
+                    <!-- 관리자 대시보드 버튼 (admin 계정 전용) -->
+                    <div sec:authorize="hasRole('ADMIN')">
+                        <a th:href="@{/admin/dashboard}" class="btn btn-warning btn-sm px-3 ms-2 text-dark fw-bold">
+                            <i class="bi bi-speedometer2 me-1"></i>관리자
+                        </a>
+                    </div>
+                    
+                    <a th:href="@{/auth/logout}" class="btn btn-outline-light btn-sm px-3 ms-2">
+                        <i class="bi bi-box-arrow-right me-1"></i>로그아웃
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- 배경 장식 -->
+<div class="auth-bg-decoration" aria-hidden="true">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+    <div class="blob blob-4"></div>
+</div>
+<div class="auth-grid-overlay" aria-hidden="true"></div>
+
+<div class="auth-wrapper">
+
+    <!-- ─── 왼쪽: 브랜딩 섹션 ─── -->
+    <div class="auth-branding d-none d-lg-flex">
+        <div class="branding-inner">
+            <div class="branding-logo animate-fade-in-up">
+                <span class="logo-emoji animate-float">🥘</span>
+            </div>
+            <h1 class="branding-title animate-fade-in-up delay-100">
+                지금 바로 시작해요<br>
+                <span class="brand-gradient-text">매일 새로운 레시피</span><br>
+                를 만나보세요
+            </h1>
+            <p class="branding-desc animate-fade-in-up delay-200">
+                회원가입 후 나만의 냉장고를 등록하고<br>
+                AI가 추천하는 오늘의 레시피를 확인해보세요
+            </p>
+
+            <!-- 혜택 하이라이트 -->
+            <div class="feature-list animate-fade-in-up delay-300">
+                <div class="feature-item">
+                    <div class="feature-icon">🎯</div>
+                    <span>재료 기반 맞춤 추천</span>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">💰</div>
+                    <span>할인 식재료 활용 레시피</span>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">❤️</div>
+                    <span>건강 목표별 레시피 필터</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ─── 오른쪽: 회원가입 폼 섹션 ─── -->
+    <div class="auth-form-section">
+        <div class="auth-form-card auth-form-card--signup animate-fade-in-up">
+
+            <!-- 모바일 로고 -->
+            <div class="mobile-logo d-lg-none text-center mb-4">
+                <span style="font-size: 2.5rem">🍽️</span>
+                <span class="brand-gradient-text fw-bold d-block" style="font-size: 1.3rem">냉장고 레시피</span>
+            </div>
+
+            <!-- 카드 헤더 -->
+            <div class="form-card-header">
+                <h2 class="form-card-title">회원가입</h2>
+                <p class="form-card-subtitle">몇 가지 정보만 입력하면 바로 시작할 수 있어요</p>
+            </div>
+
+            <!-- 에러 메시지 (서버 사이드) -->
+            <div th:if="${errorMessage}" class="alert-dark-danger p-3 mb-4 rounded-3 d-flex align-items-center gap-2" role="alert">
+                <i class="bi bi-exclamation-circle-fill flex-shrink-0"></i>
+                <span th:text="${errorMessage}"></span>
+            </div>
+
+            <!-- 회원가입 폼 -->
+            <form th:action="@{/auth/signup}"
+                  method="post"
+                  th:object="${signupDto}"
+                  id="signupForm"
+                  novalidate>
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+
+                <!-- 아이디 -->
+                <div class="mb-3">
+                    <label for="username" class="form-label-dark">
+                        아이디 <span class="text-danger">*</span>
+                    </label>
+                    <div class="input-group input-group-dark">
+                        <span class="input-group-text"><i class="bi bi-person"></i></span>
+                        <input type="text"
+                               id="username"
+                               th:field="*{username}"
+                               class="form-control form-control-dark"
+                               th:classappend="${#fields.hasErrors('username')} ? ' is-invalid' : ''"
+                               placeholder="4~20자, 영문/숫자/언더스코어"
+                               autocomplete="username"
+                               maxlength="20">
+                    </div>
+                    <div th:if="${#fields.hasErrors('username')}"
+                         class="invalid-feedback-dark mt-1"
+                         th:errors="*{username}"></div>
+                    <div class="form-hint" id="usernameHint">영문, 숫자, _(언더스코어)만 사용 가능합니다</div>
+                </div>
+
+                <!-- 비밀번호 -->
+                <div class="mb-3">
+                    <label for="password" class="form-label-dark">
+                        비밀번호 <span class="text-danger">*</span>
+                    </label>
+                    <div class="input-group input-group-dark">
+                        <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                        <input type="password"
+                               id="password"
+                               th:field="*{password}"
+                               class="form-control form-control-dark"
+                               th:classappend="${#fields.hasErrors('password')} ? ' is-invalid' : ''"
+                               placeholder="8자 이상, 영문+숫자+특수문자 포함"
+                               autocomplete="new-password"
+                               maxlength="30">
+                        <button class="btn-toggle-pw input-group-text"
+                                type="button" id="togglePw1" aria-label="비밀번호 표시/숨기기">
+                            <i class="bi bi-eye" id="toggleIcon1"></i>
+                        </button>
+                    </div>
+                    <div th:if="${#fields.hasErrors('password')}"
+                         class="invalid-feedback-dark mt-1"
+                         th:errors="*{password}"></div>
+
+                    <!-- 비밀번호 강도 표시 -->
+                    <div class="pw-strength-bar mt-2">
+                        <div class="pw-strength-fill" id="pwStrengthFill"></div>
+                    </div>
+                    <div class="pw-strength-label" id="pwStrengthLabel"></div>
+                </div>
+
+                <!-- 비밀번호 확인 -->
+                <div class="mb-3">
+                    <label for="confirmPassword" class="form-label-dark">
+                        비밀번호 확인 <span class="text-danger">*</span>
+                    </label>
+                    <div class="input-group input-group-dark">
+                        <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
+                        <input type="password"
+                               id="confirmPassword"
+                               th:field="*{confirmPassword}"
+                               class="form-control form-control-dark"
+                               th:classappend="${#fields.hasErrors('confirmPassword')} ? ' is-invalid' : ''"
+                               placeholder="비밀번호를 다시 입력하세요"
+                               autocomplete="new-password"
+                               maxlength="30">
+                        <button class="btn-toggle-pw input-group-text"
+                                type="button" id="togglePw2" aria-label="비밀번호 확인 표시/숨기기">
+                            <i class="bi bi-eye" id="toggleIcon2"></i>
+                        </button>
+                    </div>
+                    <div th:if="${#fields.hasErrors('confirmPassword')}"
+                         class="invalid-feedback-dark mt-1"
+                         th:errors="*{confirmPassword}"></div>
+                    <div class="pw-match-msg mt-1" id="pwMatchMsg"></div>
+                </div>
+
+                <!-- 이메일 -->
+                <div class="mb-3">
+                    <label for="email" class="form-label-dark">
+                        이메일 <span class="text-danger">*</span>
+                    </label>
+                    <div class="input-group input-group-dark">
+                        <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                        <input type="email"
+                               id="email"
+                               th:field="*{email}"
+                               class="form-control form-control-dark"
+                               th:classappend="${#fields.hasErrors('email')} ? ' is-invalid' : ''"
+                               placeholder="example@email.com"
+                               autocomplete="email">
+                    </div>
+                    <div th:if="${#fields.hasErrors('email')}"
+                         class="invalid-feedback-dark mt-1"
+                         th:errors="*{email}"></div>
+                </div>
+
+                <!-- 닉네임 -->
+                <div class="mb-4">
+                    <label for="nickname" class="form-label-dark">
+                        닉네임 <span class="text-danger">*</span>
+                    </label>
+                    <div class="input-group input-group-dark">
+                        <span class="input-group-text"><i class="bi bi-badge-ad"></i></span>
+                        <input type="text"
+                               id="nickname"
+                               th:field="*{nickname}"
+                               class="form-control form-control-dark"
+                               th:classappend="${#fields.hasErrors('nickname')} ? ' is-invalid' : ''"
+                               placeholder="2~20자 닉네임"
+                               maxlength="20">
+                    </div>
+                    <div th:if="${#fields.hasErrors('nickname')}"
+                         class="invalid-feedback-dark mt-1"
+                         th:errors="*{nickname}"></div>
+                </div>
+
+                <!-- 가입 버튼 -->
+                <button type="submit" id="signupBtn" class="btn btn-gradient-lg w-100">
+                    <i class="bi bi-person-check me-2"></i>가입 완료
+                </button>
+            </form>
+
+            <!-- 구분선 -->
+            <div class="divider-or">
+                <span>또는</span>
+            </div>
+
+            <!-- 로그인 링크 -->
+            <div class="text-center">
+                <p class="text-muted-light mb-0" style="font-size: var(--font-size-sm)">
+                    이미 계정이 있으신가요?
+                    <a th:href="@{/auth/login}" class="auth-link">
+                        로그인하기 <i class="bi bi-arrow-right"></i>
+                    </a>
+                </p>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- ─── FOOTER ─── -->
+<footer class="footer mt-auto py-4">
+    <div class="container text-center">
+        <p class="mb-1 text-muted">
+            <span class="brand-gradient-text fw-semibold">냉장고 레시피</span>
+            &nbsp;—&nbsp; AI가 추천하는 오늘의 레시피
+        </p>
+        <p class="mb-0 text-muted small">&copy; 2026 RecipeKR. Built with Spring Boot 3 &amp; Python AI</p>
+    </div>
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    // ── 비밀번호 토글 ──
+    function setupPasswordToggle(btnId, inputId, iconId) {
+        document.getElementById(btnId).addEventListener('click', () => {
+            const input = document.getElementById(inputId);
+            const icon = document.getElementById(iconId);
+            const isHidden = input.type === 'password';
+            input.type = isHidden ? 'text' : 'password';
+            icon.className = isHidden ? 'bi bi-eye-slash' : 'bi bi-eye';
+        });
+    }
+    setupPasswordToggle('togglePw1', 'password', 'toggleIcon1');
+    setupPasswordToggle('togglePw2', 'confirmPassword', 'toggleIcon2');
+
+    // ── 비밀번호 강도 측정 ──
+    const pwInput = document.getElementById('password');
+    const strengthFill = document.getElementById('pwStrengthFill');
+    const strengthLabel = document.getElementById('pwStrengthLabel');
+
+    pwInput.addEventListener('input', () => {
+        const pw = pwInput.value;
+        let score = 0;
+        if (pw.length >= 8) score++;
+        if (/[A-Z]/.test(pw)) score++;
+        if (/[0-9]/.test(pw)) score++;
+        if (/[^A-Za-z0-9]/.test(pw)) score++;
+        if (pw.length >= 12) score++;
+
+        const levels = [
+            { pct: '0%',   color: 'transparent', label: '' },
+            { pct: '25%',  color: '#EF4444',     label: '😟 매우 약함' },
+            { pct: '50%',  color: '#F59E0B',     label: '😐 약함' },
+            { pct: '75%',  color: '#3B82F6',     label: '😊 보통' },
+            { pct: '90%',  color: '#22C55E',     label: '💪 강함' },
+            { pct: '100%', color: '#10B981',     label: '🔒 매우 강함' },
+        ];
+
+        const level = levels[Math.min(score, 5)];
+        strengthFill.style.width = pw.length > 0 ? level.pct : '0%';
+        strengthFill.style.background = level.color;
+        strengthLabel.textContent = pw.length > 0 ? level.label : '';
+        strengthLabel.style.color = level.color;
+    });
+
+    // ── 비밀번호 일치 확인 ──
+    const confirmInput = document.getElementById('confirmPassword');
+    const matchMsg = document.getElementById('pwMatchMsg');
+
+    function checkMatch() {
+        if (!confirmInput.value) {
+            matchMsg.textContent = '';
+            return;
+        }
+        const match = pwInput.value === confirmInput.value;
+        matchMsg.textContent = match ? '✅ 비밀번호가 일치합니다' : '❌ 비밀번호가 일치하지 않습니다';
+        matchMsg.style.color = match ? '#86EFAC' : '#FCA5A5';
+        matchMsg.style.fontSize = '0.8rem';
+    }
+    pwInput.addEventListener('input', checkMatch);
+    confirmInput.addEventListener('input', checkMatch);
+
+    // ── 폼 제출 버튼 로딩 상태 ──
+    document.getElementById('signupForm').addEventListener('submit', (e) => {
+        // 비밀번호 일치 확인
+        if (pwInput.value !== confirmInput.value) {
+            e.preventDefault();
+            matchMsg.textContent = '❌ 비밀번호가 일치하지 않습니다';
+            matchMsg.style.color = '#FCA5A5';
+            confirmInput.focus();
+            return;
+        }
+        const btn = document.getElementById('signupBtn');
+        btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>처리 중...';
+        btn.disabled = true;
+    });
+</script>
+
+</body>
+</html>

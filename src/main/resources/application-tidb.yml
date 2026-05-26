@@ -1,0 +1,9 @@
+spring:
+  datasource:
+    # TiDB Serverless (MySQL compatible) connection info.
+    # Set these through .env, OS environment variables, Render, or GitHub Secrets.
+    # The fallback values are local placeholders only and must not contain real secrets.
+    url: ${TIDB_URL:jdbc:mysql://localhost:4000/recipekr?useSSL=false&serverTimezone=Asia/Seoul}
+    username: ${TIDB_USERNAME:root}
+    password: ${TIDB_PASSWORD:password}
+    driver-class-name: com.mysql.cj.jdbc.Driver

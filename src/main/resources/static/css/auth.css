@@ -1,0 +1,351 @@
+/* ============================================================
+   인증(로그인/회원가입) 전용 CSS
+   ============================================================ */
+
+/* ── 기본 레이아웃 ── */
+.auth-body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ── 배경 장식 ── */
+.auth-bg-decoration {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+    opacity: 0.15;
+}
+
+.blob-1 {
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, #FF6B35, transparent 70%);
+    top: -200px;
+    left: -200px;
+    animation: blobFloat1 12s ease-in-out infinite;
+}
+
+.blob-2 {
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, #2EC4B6, transparent 70%);
+    bottom: -150px;
+    right: -150px;
+    animation: blobFloat2 15s ease-in-out infinite;
+}
+
+.blob-3 {
+    width: 350px;
+    height: 350px;
+    background: radial-gradient(circle, #FFE066, transparent 70%);
+    top: 40%;
+    left: 30%;
+    animation: blobFloat3 18s ease-in-out infinite;
+    opacity: 0.08;
+}
+
+.blob-4 {
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, #FF6B35, transparent 70%);
+    bottom: 20%;
+    left: -100px;
+    animation: blobFloat1 20s ease-in-out infinite reverse;
+    opacity: 0.1;
+}
+
+/* 그리드 패턴 오버레이 */
+.auth-grid-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image:
+        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+    background-size: 50px 50px;
+}
+
+/* ── 메인 래퍼: 두 패널 레이아웃 ── */
+.auth-wrapper {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex: 1;
+    justify-content: center; /* 가운데 정렬 */
+    align-items: stretch;
+    padding-top: var(--navbar-height, 80px); /* 헤더 가림 방지 */
+}
+
+/* ── 왼쪽: 브랜딩 패널 ── */
+.auth-branding {
+    flex: 1;
+    max-width: 560px;       /* 너무 넓어지지 않도록 제한 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 4rem;
+    position: relative;
+}
+
+.branding-inner {
+    max-width: 420px;
+}
+
+.branding-logo {
+    margin-bottom: 2rem;
+}
+
+.logo-emoji {
+    font-size: 4.5rem;
+    line-height: 1;
+    display: block;
+    filter: drop-shadow(0 0 30px rgba(255, 107, 53, 0.5));
+}
+
+.branding-title {
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    font-weight: 800;
+    line-height: 1.25;
+    color: #ffffff;
+    margin-bottom: 1.25rem;
+    letter-spacing: -0.03em;
+}
+
+.branding-desc {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.55);
+    line-height: 1.7;
+    margin-bottom: 2.5rem;
+}
+
+/* 기능 리스트 */
+.feature-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.9375rem;
+    font-weight: 500;
+}
+
+.feature-icon {
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 107, 53, 0.12);
+    border: 1px solid rgba(255, 107, 53, 0.25);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    flex-shrink: 0;
+    transition: all 0.25s ease;
+}
+
+.feature-item:hover .feature-icon {
+    background: rgba(255, 107, 53, 0.2);
+    transform: scale(1.1);
+}
+
+/* ── 오른쪽: 폼 패널 ── */
+.auth-form-section {
+    width: 480px;
+    min-width: 360px;       /* 최소 폭만 지정 */
+    max-width: 520px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    border-left: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* 회원가입 폼은 스크롤 허용 */
+.auth-form-section:has(.auth-form-card--signup) {
+    align-items: flex-start;
+    overflow-y: auto;
+    padding: 2.5rem 2rem;
+}
+
+/* ── 폼 카드 ── */
+.auth-form-card {
+    width: 100%;
+    max-width: 400px;
+}
+
+/* 카드 헤더 */
+.form-card-header {
+    margin-bottom: 2rem;
+}
+
+.form-card-title {
+    font-size: 1.875rem;
+    font-weight: 800;
+    color: #ffffff;
+    margin-bottom: 0.4rem;
+    letter-spacing: -0.02em;
+}
+
+.form-card-subtitle {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.45);
+    margin: 0;
+}
+
+/* ── 인풋 비밀번호 토글 버튼 ── */
+.btn-toggle-pw {
+    background: rgba(255, 255, 255, 0.06) !important;
+    border: 1.5px solid rgba(255, 255, 255, 0.12) !important;
+    border-left: none !important;
+    color: rgba(255, 255, 255, 0.5) !important;
+    cursor: pointer;
+    border-radius: 0 var(--radius-md) var(--radius-md) 0 !important;
+    transition: color 0.15s ease, background 0.15s ease;
+}
+
+.btn-toggle-pw:hover {
+    color: rgba(255, 255, 255, 0.9) !important;
+    background: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* ── 유효성 검사 에러 ── */
+.invalid-feedback-dark {
+    color: #FCA5A5;
+    font-size: 0.8rem;
+    font-weight: 500;
+    display: block;
+}
+
+/* ── 힌트 텍스트 ── */
+.form-hint {
+    color: rgba(255, 255, 255, 0.35);
+    font-size: 0.78rem;
+    margin-top: 0.35rem;
+}
+
+/* ── 비밀번호 강도 바 ── */
+.pw-strength-bar {
+    height: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 9999px;
+    overflow: hidden;
+}
+
+.pw-strength-fill {
+    height: 100%;
+    width: 0%;
+    border-radius: 9999px;
+    transition: width 0.4s ease, background 0.4s ease;
+}
+
+.pw-strength-label {
+    font-size: 0.78rem;
+    margin-top: 0.35rem;
+    font-weight: 600;
+    min-height: 1rem;
+    transition: color 0.4s ease;
+}
+
+/* ── 비밀번호 일치 메시지 ── */
+.pw-match-msg {
+    font-size: 0.8rem;
+    font-weight: 500;
+    min-height: 1rem;
+}
+
+/* ── OR 구분선 ── */
+.divider-or {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 1.75rem 0;
+    color: rgba(255, 255, 255, 0.25);
+    font-size: 0.8rem;
+}
+
+.divider-or::before,
+.divider-or::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* ── 인증 링크 ── */
+.auth-link {
+    color: var(--color-primary-light);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.15s ease;
+}
+
+.auth-link:hover {
+    color: var(--color-primary);
+    text-decoration: underline;
+}
+
+/* ── 블롭 애니메이션 ── */
+@keyframes blobFloat1 {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33%       { transform: translate(40px, -30px) scale(1.05); }
+    66%       { transform: translate(-20px, 20px) scale(0.97); }
+}
+
+@keyframes blobFloat2 {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33%       { transform: translate(-30px, 20px) scale(1.03); }
+    66%       { transform: translate(30px, -40px) scale(0.98); }
+}
+
+@keyframes blobFloat3 {
+    0%, 100% { transform: translate(0, 0); }
+    50%       { transform: translate(-50px, 30px); }
+}
+
+/* ── 반응형 ── */
+@media (max-width: 992px) {
+    .auth-wrapper {
+        flex-direction: column;
+    }
+
+    .auth-form-section {
+        width: 100%;
+        min-width: 0;
+        min-height: auto;
+        border-left: none;
+        padding: 3rem 1.5rem;
+        align-items: center !important;
+        padding-top: 3rem !important;
+    }
+
+    .auth-form-section:has(.auth-form-card--signup) {
+        padding-top: 2rem !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .auth-form-section {
+        padding: 2rem 1rem;
+    }
+}

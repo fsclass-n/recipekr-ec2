@@ -1,0 +1,16 @@
+.git
+.gradle
+.vscode
+build
+bin
+
+.env
+.env.*
+!.env.example
+
+python-ai/crawler/debug_output
+old_index.diff
+
+*.log
+*.tmp
+*.pid

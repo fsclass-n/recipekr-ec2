@@ -1,0 +1,722 @@
+html, body { 
+            overflow-x: hidden; 
+            background-color: #0b0f19; 
+            color: #f1f5f9; 
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+        }
+
+        .fridge-container { max-width: 850px; margin: 40px auto 0; position: relative; perspective: 3000px; }
+
+        .fridge-wrapper {
+            background: #0f172a; border-radius: 8px; padding: 10px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.65), 0 0 30px rgba(14, 165, 233, 0.15);
+            position: relative; border: 4px solid #334155;
+            height: 65vh; min-height: 550px; max-height: 680px;
+            transform-style: preserve-3d;
+        }
+
+        /* ── 양문 3D ── */
+        .fridge-door { position: absolute; top: 0; bottom: 0; width: 50%; z-index: 50; perspective: 2000px; pointer-events: none; }
+        .left-door { left: 0; }
+        .right-door { right: 0; }
+
+        .door-inner {
+            position: absolute; top: 0; bottom: 0; left: 0; right: 0;
+            transition: transform 1.2s cubic-bezier(0.2, 0.9, 0.3, 1.1);
+            transform-style: preserve-3d; pointer-events: auto;
+        }
+        .left-door .door-inner { transform-origin: left; }
+        .right-door .door-inner { transform-origin: right; }
+        .left-door.open .door-inner { transform: rotateY(-140deg); }
+        .right-door.open .door-inner { transform: rotateY(140deg); }
+
+        .door-open-overlay { position: absolute; top: 0; bottom: 0; left: 0; right: 0; cursor: pointer; z-index: 60; }
+        .left-door.open .door-open-overlay, .right-door.open .door-open-overlay { display: none; }
+
+        .door-front, .door-back {
+            position: absolute; top: 0; bottom: 0; width: 100%;
+            backface-visibility: hidden; display: flex; align-items: center; justify-content: center;
+        }
+        
+        .door-front {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 30%, #090d16 70%, #020617 100%);
+            border: 1px solid #334155; flex-direction: column;
+            box-shadow: inset 1px 0 3px rgba(255,255,255,0.05), inset -1px 0 3px rgba(0,0,0,0.5);
+        }
+        .left-door .door-front { border-radius: 8px 0 0 8px; border-right: 1px solid #475569; }
+        .right-door .door-front { border-radius: 0 8px 8px 0; border-left: 1px solid #475569; }
+
+        .door-back {
+            background: linear-gradient(to right, #0f172a, #1e293b 15%, #1e293b 85%, #0f172a); 
+            transform: rotateY(180deg); 
+            border: 4px solid #334155;
+            flex-direction: column; justify-content: flex-start;
+            padding: 15px 12px 0 12px; 
+            box-shadow: 
+                inset 0 0 20px rgba(0,0,0,0.4),
+                0 4px 10px rgba(0,0,0,0.3);
+        }
+        .left-door .door-back { border-radius: 0 8px 8px 0; border-right: 4px solid #475569; }
+        .right-door .door-back { border-radius: 8px 0 0 8px; border-left: 4px solid #475569; }
+
+        .fridge-door-handle {
+            position: absolute; top: 50%; transform: translateY(-50%); width: 8px; height: 160px;
+            background: linear-gradient(to right, #334155, #475569, #1e293b); border-radius: 4px;
+            box-shadow: 2px 0 4px rgba(0,0,0,0.3), inset 1px 0 2px rgba(255,255,255,0.05); border: 1px solid #475569;
+        }
+        .left-door .fridge-door-handle { right: 20px; }
+        .right-door .fridge-door-handle { left: 20px; box-shadow: -2px 0 4px rgba(0,0,0,0.3); }
+
+        .home-bar {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 65%; height: 28%; border: 2px solid #334155; border-radius: 6px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.2), 0 1px 2px rgba(255,255,255,0.05);
+        }
+
+        .door-guard-shelf {
+            width: calc(100% + 24px); margin-left: -12px; margin-right: -12px; height: 60px; margin-top: auto;
+            background: linear-gradient(to bottom, rgba(30, 41, 59, 0.95), rgba(15, 23, 42, 0.95));
+            border-top: 3px solid rgba(255,255,255,0.1); border-bottom: 2px solid #334155;
+            box-shadow: 0 -3px 15px rgba(0,0,0,0.3), inset 0 6px 12px rgba(255,255,255,0.03);
+            position: relative; z-index: 15;
+        }
+        .left-door .door-guard-shelf { border-radius: 0 0 8px 0; }
+        .right-door .door-guard-shelf { border-radius: 0 0 0 8px; }
+
+        /* ── 내부 본체 (실사 3D 냉장고 적용) ── */
+        .fridge-shelves {
+            /* 3D realistic refrigerator interior walls */
+            background: linear-gradient(to bottom, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+            border-radius: 8px; 
+            padding: 12px; 
+            height: 100%; 
+            display: flex; 
+            gap: 12px;
+            border: 4px solid #334155;
+            box-shadow: 
+                inset 0 15px 30px rgba(0,0,0,0.6),
+                inset 15px 0 20px rgba(0,0,0,0.4),
+                inset -15px 0 20px rgba(0,0,0,0.4),
+                0 10px 25px rgba(0,0,0,0.5);
+            position: relative;
+            transform-style: preserve-3d;
+        }
+        .shelf-side {
+            flex: 1; display: flex; flex-direction: column; overflow-y: auto; overflow-x: hidden; padding-right: 4px; position: relative;
+        }
+        .shelf-side::-webkit-scrollbar, .door-grid-wrapper::-webkit-scrollbar { display: none; }
+        .shelf-side, .door-grid-wrapper { -ms-overflow-style: none; scrollbar-width: none; }
+
+        .shelf-header {
+            display: flex; justify-content: center; align-items: center;
+            border-bottom: 2px solid rgba(255,255,255,0.06); padding-bottom: 8px; margin-bottom: 10px;
+            position: sticky; top: 0; background: rgba(15, 23, 42, 0.95); z-index: 25; min-height: 45px; height: auto;
+            box-shadow: 0 5px 10px rgba(15, 23, 42, 0.8); backdrop-filter: blur(4px);
+        }
+        .shelf-title { color: #f1f5f9; font-size: 0.95rem; font-weight: 800; margin: 0; display: flex; align-items: center; gap: 5px; }
+
+        /* AI 추천 영역 배너화 */
+        .ai-recommendation-banner {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.9) 100%);
+            border: 1px solid rgba(56, 189, 248, 0.35);
+            border-radius: 8px;
+            padding: 8px 12px;
+            margin-bottom: 12px;
+            box-shadow: 
+                0 4px 15px rgba(0, 0, 0, 0.4),
+                inset 0 0 10px rgba(56, 189, 248, 0.15);
+            backdrop-filter: blur(8px);
+        }
+        .ai-banner-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 6px;
+        }
+        .ai-banner-badge {
+            background: linear-gradient(135deg, #0284c7, #3b82f6);
+            color: #ffffff;
+            font-size: 0.65rem;
+            font-weight: 750;
+            padding: 1px 5px;
+            border-radius: 4px;
+            letter-spacing: 0.5px;
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+        }
+        .ai-banner-title {
+            color: #94a3b8;
+            font-size: 0.72rem;
+            font-weight: 600;
+        }
+        .ai-banner-ingredients {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        .ai-banner-ingredients .ing-item {
+            background: rgba(14, 165, 233, 0.15);
+            color: #38bdf8;
+            border: 1px solid rgba(14, 165, 233, 0.3);
+            padding: 2px 7px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            transition: all 0.2s ease;
+        }
+        .ai-banner-ingredients .ing-item:hover {
+            background: rgba(14, 165, 233, 0.25);
+            border-color: #38bdf8;
+            transform: translateY(-1px);
+        }
+        .ai-banner-ingredients .ing-bullet {
+            color: #38bdf8;
+            font-size: 0.7rem;
+        }
+
+        /* 선반 맞춤 정렬 */
+        .door-grid-wrapper { width: 100%; flex: 1; position: relative; }
+        .door-grid { 
+            display: grid;
+            grid-template-columns: repeat(3, auto);
+            justify-content: center;
+            align-content: start;
+            gap: 15px 8px;
+            position: relative; padding-bottom: 25px; padding-top: 10px; min-height: 100%;
+            /* 3D realistic door shelf pockets */
+            background: 
+                repeating-linear-gradient(to bottom, 
+                    transparent 0px, 
+                    transparent 125px, 
+                    rgba(15, 23, 42, 0.3) 125px,
+                    rgba(255, 255, 255, 0.1) 127px, 
+                    rgba(148, 163, 184, 0.15) 135px, 
+                    rgba(71, 85, 105, 0.4) 139px, 
+                    rgba(0, 0, 0, 0.3) 145px
+                ),
+                linear-gradient(to right, #0f172a, #1e293b 15%, #1e293b 85%, #0f172a);
+            background-size: 100% 145px, 100% 100%;
+            background-attachment: local, local;
+            box-shadow: 
+                inset 10px 0 15px -5px rgba(0,0,0,0.2),
+                inset -10px 0 15px -5px rgba(0,0,0,0.2);
+            padding-left: 8px;
+            padding-right: 8px;
+        }
+        
+        .center-grid { 
+            display: grid;
+            grid-template-columns: repeat(3, auto);
+            justify-content: center;
+            align-content: start;
+            gap: 15px 8px;
+            padding-bottom: 90px; /* 크리스퍼 서랍 공간 확보 */
+            padding-top: 10px; min-height: 100%; position: relative;
+            /* 3D realistic glass shelves in refrigerator cavity */
+            background: 
+                repeating-linear-gradient(to bottom, 
+                    transparent 0px, 
+                    transparent 125px, 
+                    rgba(15, 23, 42, 0.4) 125px,   /* depth shadow */
+                    rgba(255, 255, 255, 0.15) 127px,  /* white plastic trim front */
+                    rgba(14, 165, 233, 0.15) 132px,   /* glass body blue tint */
+                    rgba(56, 189, 248, 0.5) 136px,    /* metallic trim highlight */
+                    rgba(0, 0, 0, 0.4) 145px         /* drop shadow below */
+                ),
+                radial-gradient(circle at 50% 15%, #1e293b 0%, #0f172a 60%, #090d16 100%);
+            background-size: 100% 145px, 100% 100%;
+            background-attachment: local, local;
+            box-shadow: 
+                inset 12px 0 20px -8px rgba(0,0,0,0.3), 
+                inset -12px 0 20px -8px rgba(0,0,0,0.3),
+                inset 0 20px 20px -10px rgba(0,0,0,0.2);
+            padding-left: 8px;
+            padding-right: 8px;
+        }
+
+        /* 하단 야채/얼음 서랍 (Crisper Drawers) */
+        .crisper-drawers {
+            position: absolute; bottom: 0; left: 0; right: 0; height: 80px;
+            display: flex; gap: 8px; padding: 0 8px 8px 8px;
+            z-index: 20;
+        }
+        .crisper-drawer {
+            flex: 1; border-radius: 6px; border: 2px solid rgba(255,255,255,0.15);
+            /* 투명한 푸른빛 플라스틱 서랍 3D 묘사 */
+            background: linear-gradient(to bottom, rgba(14, 165, 233, 0.08), rgba(15, 23, 42, 0.65));
+            box-shadow: 
+                inset 0 4px 10px rgba(255,255,255,0.05), 
+                inset 0 -10px 15px rgba(14, 165, 233, 0.05),
+                0 4px 6px rgba(0,0,0,0.3);
+            display: flex; align-items: flex-start; justify-content: center; padding-top: 8px;
+            position: relative; overflow: hidden;
+        }
+        .crisper-drawer::before {
+            content: ''; position: absolute; top: 12px; width: 45px; height: 7px; 
+            background: linear-gradient(to bottom, rgba(71, 85, 105, 0.95), rgba(30, 41, 59, 0.95));
+            border-radius: 4px; 
+            box-shadow: 
+                0 1px 2px rgba(0,0,0,0.3),
+                inset 0 1px 1px rgba(255,255,255,0.05);
+        }
+
+        /* 제품 카드 및 선반 호버 애니메이션 */
+        .pocket-slot {
+            position: relative;
+            height: 135px;
+            flex: 0 0 calc(33.33% - 6px);
+            min-width: 82px;
+            max-width: 105px;
+            margin-bottom: 0;
+            z-index: 5;
+        }
+        
+        .pocket-slot .ingredient-card {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform: translateY(0);
+            z-index: 5;
+            transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.25, 1.1), box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+
+        .pocket-slot:hover {
+            z-index: 15;
+        }
+        
+        .pocket-slot:hover .ingredient-card {
+            transform: translateY(-20px);
+            z-index: 15;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+            background: rgba(30, 41, 59, 0.95) !important;
+            border-color: #38bdf8 !important;
+        }
+
+        .pocket-rail {
+            position: absolute;
+            bottom: 8px;
+            left: 0;
+            right: 0;
+            height: 50px;
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.05) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-top: 2px solid rgba(255, 255, 255, 0.45);
+            border-radius: 3px;
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            z-index: 8;
+            pointer-events: none;
+            box-shadow: inset 0 1px 2px rgba(255,255,255,0.15), 0 -2px 6px rgba(0,0,0,0.25);
+        }
+
+        .ingredient-card { 
+            border-radius: 12px; 
+            padding: 12px 6px; 
+            text-align: center; 
+            cursor: pointer; 
+            transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.3s ease, border-color 0.3s ease, background 0.3s ease; 
+            position: relative; 
+            z-index: 5;
+            height: 135px;
+            width: auto;
+            min-width: 82px;
+            max-width: 150px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.95), rgba(15, 23, 42, 0.98)); 
+            border: 1px solid rgba(255, 255, 255, 0.12); 
+            box-shadow: inset 0 1px 1px rgba(255,255,255,0.05), 0 4px 6px rgba(0,0,0,0.15);
+        }
+        .ingredient-card::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: -30px;
+            background: transparent;
+        }
+        
+        .shelf-side .ingredient-card { 
+            transform: translateY(-20px);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.15); 
+        }
+        .shelf-side .ingredient-card:hover { 
+            background: linear-gradient(135deg, rgba(30, 41, 59, 1), rgba(15, 23, 42, 1)); 
+            transform: translateY(-35px) !important; 
+            box-shadow: 0 15px 30px rgba(0,0,0,0.5); 
+            z-index: 25 !important; 
+            border-color: #38bdf8;
+        }
+        
+        .door-back .ingredient-card { 
+            box-shadow: 0 4px 6px rgba(0,0,0,0.18); 
+            border-bottom: 2px solid rgba(255, 255, 255, 0.15);
+            background: rgba(30, 41, 59, 0.7); 
+            transform: translateY(-5px);
+        }
+        .door-back .ingredient-card:hover {
+            transform: translateY(-25px) !important; 
+            box-shadow: 0 12px 24px rgba(0,0,0,0.4); 
+            border-color: #38bdf8;
+            background: linear-gradient(135deg, rgba(30, 41, 59, 1), rgba(15, 23, 42, 1)); 
+        }
+        
+        .door-back .ingredient-card:nth-child(1):hover,
+        .door-back .ingredient-card:nth-child(2):hover,
+        .door-back .ingredient-card:nth-child(3):hover { z-index: 25 !important; }
+
+        .door-back .ingredient-card:nth-child(4):hover,
+        .door-back .ingredient-card:nth-child(5):hover,
+        .door-back .ingredient-card:nth-child(6):hover { z-index: 35 !important; }
+
+        .door-back .ingredient-card:nth-child(n+7):hover { z-index: 45 !important; }
+        
+        .ingredient-name { 
+            color: #ffffff !important; 
+            font-weight: 800; 
+            font-size: 0.85rem; 
+            margin-bottom: 4px; 
+            white-space: normal; 
+            word-break: break-word;
+            line-height: 1.25;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden; 
+            padding: 0 4px; 
+            width: 100%;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+            letter-spacing: -0.5px;
+        }
+        
+        .ingredient-card.selected { 
+            border-color: #38bdf8!important; 
+            box-shadow: 0 0 0 2px #38bdf8 inset, 0 4px 12px rgba(14, 165, 233, 0.3)!important; 
+        }
+
+        .ingredient-price-info {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2px;
+        }
+        .ingredient-card:hover .ingredient-img {
+            transform: scale(1.1);
+        }
+
+        .ingredient-icon-wrapper { 
+            width: 52px; 
+            height: 52px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            background: transparent; 
+            border: none;
+            box-shadow: none;
+        }
+        .ingredient-icon-wrapper svg { 
+            width: 44px; 
+            height: 44px; 
+            stroke-width: 1.8; 
+            fill: none; 
+            stroke-linecap: round; 
+            stroke-linejoin: round; 
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+            transition: transform 0.25s ease;
+        }
+        .ingredient-card:hover .ingredient-icon-wrapper svg {
+            transform: scale(1.1);
+        }
+
+        .ingredient-price { 
+            font-size: 0.55rem !important; 
+            color: #94a3b8; 
+            text-decoration: line-through !important; 
+            display: block;
+            opacity: 0.8;
+        }
+        .ingredient-discount { 
+            font-size: 1rem; 
+            color: #38bdf8; 
+            font-weight: 900; 
+            display: block; 
+            letter-spacing: -0.5px;
+        }
+        .discount-rate { 
+            color: #fbbf24 !important; 
+            font-size: 0.8rem;
+            background: rgba(251, 191, 36, 0.15);
+            padding: 3px 8px;
+            border-radius: 12px;
+            margin-bottom: 6px;
+            display: inline-block;
+            border: 1px solid rgba(251, 191, 36, 0.3);
+        }
+
+        .form-area {
+            background: rgba(15, 23, 42, 0.55); 
+            border-radius: 12px; 
+            padding: 15px; 
+            flex: 1; 
+            display: flex; 
+            flex-direction: column;
+            border: 1px solid rgba(255, 255, 255, 0.06); 
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            backdrop-filter: blur(10px);
+        }
+        .selected-tags {
+            flex: 1; min-height: 50px; overflow-y: auto; padding: 8px; background: rgba(15, 23, 42, 0.4); border-radius: 8px; border: 1px dashed rgba(255,255,255,0.1);
+            display: flex; flex-wrap: wrap; gap: 5px; align-items: flex-start; align-content: flex-start;
+        }
+        .tag-item { background: #0284c7; color: white; padding: 3px 8px; border-radius: 15px; font-size: 0.8rem; display: flex; align-items: center; gap: 4px; }
+        .tag-item .remove-tag { cursor: pointer; opacity: 0.8; font-weight: bold; }
+        .tag-item .remove-tag:hover { opacity: 1; }
+        .form-label { font-size: 0.95rem; color: #cbd5e1; }
+        
+        .form-select { 
+            font-size: 0.85rem; 
+            padding: 6px 25px 6px 10px;
+            background-color: rgba(15, 23, 42, 0.6); 
+            color: #f1f5f9; 
+            border-color: rgba(255, 255, 255, 0.15); 
+        }
+        .form-select option {
+            background-color: #0f172a;
+            color: #f1f5f9;
+        }
+
+        .btn-action { border-radius: 6px!important; font-size: 0.85rem; font-weight: 600; transition: all 0.2s ease; white-space: nowrap; padding: 6px 12px; flex: 1; text-align: center; justify-content: center; display: flex; align-items: center; }
+        
+        .btn-crawl { 
+            background: rgba(16, 185, 129, 0.15); 
+            color: #10b981; 
+            border: 1px solid #10b981; 
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .btn-crawl:hover { 
+            background: #10b981 !important; 
+            color: #ffffff !important; 
+        }
+        .btn-crawl:disabled, .btn-crawl.disabled {
+            background: rgba(30, 41, 59, 0.5) !important;
+            color: #64748b !important;
+            border-color: #334155 !important;
+            cursor: not-allowed;
+            pointer-events: none;
+            opacity: 0.7;
+        }
+        
+        .btn-loading-state {
+            position: relative;
+            overflow: hidden;
+            pointer-events: none;
+        }
+        .btn-loading-state::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; bottom: 0;
+            width: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            background-size: 200% 100%;
+            animation: progressTrack 2s linear infinite;
+            z-index: 1;
+        }
+        @keyframes progressTrack {
+            0% { background-position: 100% 0; }
+            100% { background-position: -100% 0; }
+        }
+        
+        .cart-icon-runner {
+            position: absolute;
+            left: 0%;
+            top: 50%;
+            transform: translateY(-50%) translateX(-50%);
+            font-size: 1.1rem;
+            color: #ffffff;
+            z-index: 3;
+            pointer-events: none;
+            opacity: 0;
+            transition: left 0.1s linear;
+        }
+        .btn-loading-state .cart-icon-runner {
+            opacity: 1;
+        }
+        .btn-loading-state .btn-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+        .cook-icon {
+            display: inline-block;
+            margin-right: 8px;
+            color: #fde047;
+            animation: panFlip 1s ease-in-out infinite;
+        }
+        @keyframes panFlip {
+            0% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-4px) rotate(-15deg); }
+            50% { transform: translateY(0) rotate(10deg); }
+            75% { transform: translateY(-2px) rotate(-5deg); }
+            100% { transform: translateY(0) rotate(0deg); }
+        }
+        
+        .btn-progress-fill {
+            position: absolute;
+            top: 0; left: 0; bottom: 0;
+            width: 0%;
+            background: rgba(255, 255, 255, 0.2);
+            z-index: 1;
+            transition: width 0.1s linear;
+        }
+
+        .recommend-footer { background: #070a12; border-top: 1px solid #1e293b; padding: 20px 0; margin-top: 30px; }
+        
+        .market-title { font-size: 1.15rem; font-weight: 900; text-align: center; margin-bottom: 15px; display: flex; justify-content: center; align-items: center; gap: 6px; }
+        
+        /* 로고 SVG 스타일 */
+        .svg-logo { width: 22px; height: 22px; }
+        /* ── 모바일 반응형 ── */
+        @media (max-width: 768px) {
+            .fridge-container {
+                perspective: none;
+                margin-top: 10px;
+                max-width: 100%;
+                padding: 0 10px;
+            }
+            .fridge-wrapper {
+                height: auto;
+                min-height: auto;
+                max-height: none;
+                transform-style: flat;
+                box-shadow: none;
+                border: none;
+                background: transparent;
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+                padding: 0;
+            }
+            .fridge-door {
+                position: relative;
+                width: 100%;
+                perspective: none;
+                pointer-events: auto; /* 터치 활성화 */
+            }
+            .door-inner {
+                position: relative;
+                transform: none !important;
+                transition: none !important;
+            }
+            .door-front {
+                display: none;
+            }
+            .door-back {
+                position: relative;
+                transform: none !important;
+                border-radius: 12px !important;
+                border: 2px solid #334155 !important;
+                padding: 15px !important;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.3) !important;
+                background: linear-gradient(135deg, #1e293b, #0f172a) !important;
+            }
+            .door-open-overlay { display: none !important; }
+            .home-bar { display: none !important; }
+            .door-guard-shelf { display: none !important; }
+            
+            .fridge-shelves {
+                display: contents; /* 모바일에서 shelf-side를 wrapper의 직접적인 flex 자식으로 만듦 */
+            }
+            .shelf-side {
+                max-width: 100% !important;
+                overflow: visible;
+                padding-right: 0;
+                /* 기존 fridge-shelves에 있던 디자인을 개별 카드로 이동 */
+                padding: 15px;
+                border-radius: 12px;
+                border: 2px solid #334155;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+                background: linear-gradient(135deg, #1e293b, #0f172a);
+            }
+            
+            /* 모바일에서 요소 순서 재배치 (재료들 먼저, 폼 마지막) */
+            .fridge-shelves > .shelf-side:nth-child(1) { order: 1; } /* 이마트 재료 */
+            .fridge-door.left-door { order: 2; margin-bottom: 20px; } /* 홈플러스 재료 */
+            .fridge-door.right-door { order: 3; margin-bottom: 20px; } /* 롯데마트 재료 */
+            .fridge-shelves > .shelf-side:nth-child(2) { order: 4; } /* 레시피 의뢰 폼 */
+
+            .center-grid, .door-grid {
+                grid-template-columns: repeat(auto-fill, minmax(85px, 1fr));
+                background: none;
+                box-shadow: none;
+                padding-bottom: 0;
+                justify-content: start;
+            }
+            .crisper-drawers { display: none; } /* 모바일에서는 장식 생략 */
+            .pocket-slot {
+                flex: none;
+            }
+            .pocket-rail { display: none; } /* 선반 레일 장식 생략 */
+
+            .ingredient-card {
+                transform: translateY(0) !important;
+                box-shadow: 0 4px 6px rgba(0,0,0,0.15) !important;
+            }
+            .ingredient-card:hover, .pocket-slot:hover .ingredient-card {
+                transform: translateY(-5px) !important;
+            }
+            .form-area {
+                margin-bottom: 10px;
+            }
+            .ai-recommendation-banner {
+                margin-top: 10px;
+            }
+        }
+/* result.html specific styles */
+.recipe-card { transition:transform .2s, box-shadow .2s; }
+        .recipe-card:hover { transform:translateY(-4px); box-shadow:0 8px 32px rgba(124,58,237,.3); }
+        .badge-rank {
+            background:linear-gradient(135deg,#7c3aed,#4f46e5);
+            color:#fff; border-radius:50%; width:36px; height:36px;
+            display:inline-flex; align-items:center; justify-content:center;
+            font-weight:700; font-size:1rem; flex-shrink:0;
+        }
+        .badge-health {
+            background:rgba(124,58,237,.2); color:#a78bfa;
+            border:1px solid #7c3aed; border-radius:20px; padding:3px 10px; font-size:.8rem;
+        }
+        .badge-cal {
+            background:rgba(239,68,68,.15); color:#fca5a5;
+            border:1px solid #ef4444; border-radius:20px; padding:3px 10px; font-size:.8rem;
+        }
+        .score-bar { height:6px; border-radius:3px; background:rgba(255,255,255,0.1); overflow:hidden; }
+        .score-fill { height:100%; background:linear-gradient(90deg,#7c3aed,#60a5fa); transition:width 1s ease; }
+        .result-title {
+            background:linear-gradient(135deg,#a78bfa,#60a5fa);
+            -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+        }
+        .btn-back {
+            background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12);
+            color:#e2e8f0; border-radius:10px;
+        }
+        .btn-back:hover { background:rgba(255,255,255,0.12); color:#fff; }
+        .empty-state { text-align:center; padding:3rem; color:#6b7280; }
+        
+        /* ── 모바일 반응형 ── */
+        @media (max-width: 768px) {
+            .recipe-card { padding: 1.25rem !important; }
+            .result-title { font-size: 1.25rem !important; }
+            .badge-health, .badge-cal { font-size: 0.75rem; padding: 2px 8px; }
+            .badge-rank { width: 30px; height: 30px; font-size: 0.9rem; }
+        }
+

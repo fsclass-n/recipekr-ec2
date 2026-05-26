@@ -1,0 +1,11 @@
+# AI 추천 모델
+scikit-learn==1.4.2
+pandas==2.2.2
+numpy==1.26.4
+matplotlib==3.8.4
+google-generativeai==0.8.4
+python-dotenv==1.0.1
+
+# RPA 크롤러
+playwright==1.44.0
+mysql-connector-python==8.4.0

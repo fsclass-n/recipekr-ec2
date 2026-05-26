@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 레시피 추천 | 냉장고 레시피</title>
+    <link rel="icon" type="image/svg+xml" href="/images/favicon.svg">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/global.css?v=20}">
+    <link rel="stylesheet" th:href="@{/css/recipe.css?v=3}">
+    <link rel="stylesheet" th:href="@{/css/chatbot.css?v=1}">
+    <style>
+        /* 레시피 추천 페이지 - 네비게이션 사각형 박스 배경 제거 */
+        @media (min-width: 992px) {
+            .desktop-nav-pill {
+                background: transparent !important;
+                background-color: transparent !important;
+                box-shadow: none !important;
+                border: none !important;
+                width: max-content !important;
+                max-width: max-content !important;
+            }
+        }
+    </style>
+
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark sticky-top" id="mainNavbar">
+    <div class="container">
+        <a class="navbar-brand d-flex align-items-center gap-2" th:href="@{/}">
+            <span class="brand-icon"><img src="/images/icons/plate.svg" alt="로고"></span><span class="brand-text">냉장고 레시피</span>
+        </a>
+        <button class="navbar-toggler border-0 custom-toggler" type="button"
+                data-bs-toggle="offcanvas" data-bs-target="#navbarContent" aria-controls="navbarContent">
+            <div class="hamburger-icon">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </button>
+        <div class="offcanvas-lg offcanvas-end offcanvas-dark flex-grow-1" tabindex="-1" id="navbarContent" aria-labelledby="offcanvasNavbarLabel">
+            <div class="offcanvas-body d-flex flex-column flex-lg-row align-items-lg-center justify-content-between w-100">
+                <ul class="navbar-nav desktop-nav-pill me-auto mb-2 mb-lg-0 gap-2">
+                    <li class="nav-item"><a class="nav-link" th:href="@{/}"><i class="bi bi-house-door me-1"></i>홈</a></li>
+                    <li class="nav-item" sec:authorize="isAuthenticated()">
+                        <a class="nav-link" th:href="@{/recipe/recommend}"><i class="bi bi-stars me-1"></i>레시피 추천</a>
+                    </li>
+                </ul>
+                <div class="d-flex flex-column flex-lg-row align-items-lg-center gap-2 mt-3 mt-lg-0 mobile-nav-actions">
+                    <div sec:authorize="isAnonymous()" class="d-flex flex-column flex-lg-row gap-2">
+                        <a th:href="@{/auth/login}" class="btn btn-outline-light btn-sm px-3">
+                            <i class="bi bi-box-arrow-in-right me-1"></i>로그인
+                        </a>
+                        <a th:href="@{/auth/signup}" class="btn btn-accent btn-sm px-3">
+                            <i class="bi bi-person-plus me-1"></i>회원가입
+                        </a>
+                    </div>
+                    <div sec:authorize="isAuthenticated()" class="d-flex flex-column flex-lg-row align-items-lg-center gap-3">
+                        <span class="text-white-50">
+                            <i class="bi bi-person-circle me-1"></i>
+                            <span sec:authentication="principal.nickname">사용자</span>님
+                        </span>
+                        <div class="d-flex flex-column flex-lg-row gap-2">
+                            <a th:href="@{/mypage}" class="btn btn-outline-info btn-sm px-3">
+                                <i class="bi bi-person-badge me-1"></i>마이페이지
+                            </a>
+                            <div sec:authorize="hasRole('ADMIN')">
+                                <a th:href="@{/admin/dashboard}" class="btn btn-warning btn-sm px-3 text-dark fw-bold w-100">
+                                    <i class="bi bi-speedometer2 me-1"></i>관리자
+                                </a>
+                            </div>
+                            <a th:href="@{/auth/logout}" class="btn btn-outline-light btn-sm px-3">
+                                <i class="bi bi-box-arrow-right me-1"></i>로그아웃
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<main class="py-4">
+    <div class="container position-relative">
+        <div class="text-start text-md-center mb-5 mt-5 pt-4">
+            <span class="badge-brand mb-4 mt-2 d-inline-block">AI 셰프의 주방</span>
+            
+            <!-- 데스크탑 전용 타이틀/내용 -->
+            <div class="d-none d-md-block">
+                <h2 class="section-title text-white fs-4">오늘의 냉장고를 열어보세요!</h2>
+                <p class="section-subtitle small mb-0" style="margin-top: 18px !important; margin-bottom: 18px !important; line-height: 1.6; font-size: 0.9rem; color: #cbd5e1 !important; font-style: italic;">
+                    "냉장고를 두드리면 방금 배송한 마트별 추천 식재료를 확인하실 수 있습니다.<br>
+                    또한 장보기 버튼을 누르면 마트에서 방금 가져온 신선한 식재료로 재진열됩니다."
+                </p>
+            </div>
+
+            <!-- 모바일 전용 타이틀/내용 -->
+            <div class="d-md-none mt-2">
+                <h2 class="section-title text-white fs-4 fw-bold mb-3">오늘의 추천 식재료</h2>
+                <p class="section-subtitle small mb-0" style="line-height: 1.6; font-size: 0.95rem; color: #cbd5e1 !important;">
+                    방금 배송된 신선한 재료들입니다.<br>
+                    원하는 재료를 선택하고 레시피를 의뢰해 보세요!
+                </p>
+            </div>
+        </div>
+
+        <div class="fridge-container">
+            <div class="fridge-wrapper" id="fridgeWrapper">
+
+                <!-- 내부 본체 (이마트) -->
+                <div class="fridge-shelves">
+                    <div class="shelf-side" style="overflow: hidden;">
+                        <div class="shelf-header">
+                            <h4 class="shelf-title" style="color: #f1f5f9;">
+                                <!-- 이마트 로고 텍스트 -->
+                                <span style="color: #fbbf24; font-weight: 900; font-size: 1.5rem; letter-spacing: -2px;">E</span><span style="color: #4b5563; font-weight: 900; font-size: 1.5rem; letter-spacing: -1px;">mart</span>
+                            </h4>
+                        </div>
+                        
+
+                        <div class="center-grid" style="position: relative;">
+                            <div class="center-grid-shelf" style="top: 135px;"></div>
+                            <div class="center-grid-shelf" style="top: 285px;"></div>
+                            <div th:each="item : ${otherItems}" class="ingredient-card"
+                                 th:onclick="toggleIngredient(this, [[${item.toIngredientString()}]])">
+                                <span class="discount-rate fw-bold" th:if="${item.originalPrice != null and item.originalPrice > item.discountPrice}" th:text="|${#numbers.formatInteger((item.originalPrice - item.discountPrice) * 100.0 / item.originalPrice, 0)}%↓|"></span>
+                                <div class="ingredient-name" th:text="${item.toIngredientString()}">식재료</div>
+                                <div class="ingredient-price-info">
+                                    <span class="ingredient-price" th:if="${item.originalPrice != null and item.originalPrice > item.discountPrice}" th:text="|${#numbers.formatInteger(item.originalPrice, 0, 'COMMA')}원|"></span>
+                                    <span class="ingredient-discount" th:text="|${#numbers.formatInteger(item.discountPrice, 0, 'COMMA')}원|"></span>
+                                </div>
+                            </div>
+                            <!-- 실사 냉장고 구현: 크리스퍼 서랍(야채/얼음칸) -->
+                            <div class="crisper-drawers">
+                                <div class="crisper-drawer"></div>
+                                <div class="crisper-drawer"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="shelf-side" style="max-width: 380px;">
+                        <div class="shelf-header">
+                            <h4 class="shelf-title"><i class="bi bi-magic text-warning"></i> 레시피 의뢰</h4>
+                        </div>
+                        <div class="form-area">
+                            <form th:action="@{/recipe/recommend}" method="post" id="recipeForm" class="d-flex flex-column h-100">
+                                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                                <input type="hidden" id="selectedIngredientsInput" name="ingredients" required>
+                                <label class="form-label fw-bold text-light mb-2">선택한 재료 <span class="text-danger">*</span></label>
+                                <div class="selected-tags mb-3" id="selectedIngredientsDisplay" style="height: 150px; min-height: 150px; max-height: 150px; overflow-y: auto;">
+                                    <span class="text-muted small ms-1" style="opacity: 0.4;">재료 카드를 클릭하세요.</span>
+                                </div>
+                                <!-- 오늘의 추천 재료 조합 -->
+                                <div class="ai-recommendation-banner mb-3">
+                                    <div class="ai-banner-header">
+                                        <span class="ai-banner-badge">
+                                            <i class="bi bi-robot"></i> AI Chef
+                                        </span>
+                                        <span class="ai-banner-title">오늘의 추천 재료 조합</span>
+                                    </div>
+                                    <div class="ai-banner-ingredients">
+                                        <span th:each="ing : ${recommendedIngredients}" 
+                                              class="ing-item" 
+                                              th:onclick="addRecommendedIngredient([[${ing}]])"
+                                              style="cursor: pointer;">
+                                            <span class="ing-bullet">+</span>
+                                            <span th:text="${ing}">재료</span>
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <label for="healthType" class="form-label fw-bold text-light mb-2">건강 목표</label>
+                                <select class="form-select mb-3" id="healthType" name="health_type">
+                                    <option value="일반">일반식 (제한 없음)</option>
+                                    <option value="다이어트">다이어트 (저칼로리)</option>
+                                    <option value="당뇨">당뇨식 (저당)</option>
+                                    <option value="저염식">저염식 (나트륨 최소화)</option>
+                                    <option value="벌크업">벌크업 (고단백)</option>
+                                </select>
+                                <div class="d-flex flex-column mt-auto gap-2">
+                                    <div class="d-flex gap-2 w-100">
+                                        <button type="button" class="btn btn-outline-secondary btn-action flex-grow-1" onclick="resetSelection()">
+                                            <i class="bi bi-arrow-counterclockwise me-1"></i>초기화
+                                        </button>
+                                        <button type="button" class="btn btn-crawl btn-action flex-grow-1" id="crawlBtn" onclick="runCrawler()">
+                                            <i class="bi bi-cart3 me-2"></i>장보기
+                                        </button>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary btn-action w-100 py-2" id="submitBtn">
+                                        <i class="bi bi-magic me-1"></i>추천 받기
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 왼쪽 문 (홈플러스) -->
+                <div class="fridge-door left-door" id="leftDoor">
+                    <div class="door-inner">
+                        <div class="door-open-overlay" onclick="toggleFridge()"></div>
+                        <div class="door-front">
+                            <div class="fridge-door-handle"></div>
+                        </div>
+                        <div class="door-back">
+                            <div class="market-title" style="color: #e30613;">
+                                <!-- 홈플러스 로고 -->
+                                <span style="color: #e30613; font-weight: 900; font-family: 'Arial Black', sans-serif; letter-spacing: -1px; font-size: 1.4rem; padding-right: 4px;">Home plus</span>
+                            </div>
+                            <div class="door-grid-wrapper" style="position: relative;">
+                                <div class="fridge-shelves-foreground" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; pointer-events: none;">
+                                    <div class="pocket-rail" style="position: absolute; top: 100px; left: 0; right: 0; height: 50px; z-index: 30;"></div>
+                                    <div class="pocket-rail" style="position: absolute; top: 250px; left: 0; right: 0; height: 50px; z-index: 40;"></div>
+                                    <div class="pocket-rail" style="position: absolute; top: 400px; left: 0; right: 0; height: 50px; z-index: 50;"></div>
+                                </div>
+                                <div class="door-grid">
+                                    <div th:each="item : ${frozenItems}" class="ingredient-card"
+                                         th:onclick="toggleIngredient(this, [[${item.toIngredientString()}]])">
+                                        <span class="discount-rate fw-bold" th:if="${item.originalPrice != null and item.originalPrice > item.discountPrice}" th:text="|${#numbers.formatInteger((item.originalPrice - item.discountPrice) * 100.0 / item.originalPrice, 0)}%↓|"></span>
+                                        <div class="ingredient-name" th:text="${item.toIngredientString()}">식재료</div>
+                                        <div class="ingredient-price-info">
+                                            <span class="ingredient-price" th:if="${item.originalPrice != null and item.originalPrice > item.discountPrice}" th:text="|${#numbers.formatInteger(item.originalPrice, 0, 'COMMA')}원|"></span>
+                                            <span class="ingredient-discount" th:text="|${#numbers.formatInteger(item.discountPrice, 0, 'COMMA')}원|"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="door-guard-shelf" onclick="toggleFridge()"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 오른쪽 문 (롯데마트) -->
+                <div class="fridge-door right-door" id="rightDoor">
+                    <div class="door-inner">
+                        <div class="door-open-overlay" onclick="toggleFridge()"></div>
+                        <div class="door-front">
+                            <div class="home-bar"></div>
+                            <div class="fridge-door-handle"></div>
+                        </div>
+                        <div class="door-back">
+                            <div class="market-title" style="color: #ed1c24;">
+                                <!-- 롯데마트 텍스트 로고 -->
+                                <span style="color: #ed1c24; font-weight: 800; font-family: Arial, sans-serif; font-size: 1.3rem; letter-spacing: 1px;">LOTTE MART</span>
+                            </div>
+                            <div class="door-grid-wrapper" style="position: relative;">
+                                <div class="fridge-shelves-foreground" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; pointer-events: none;">
+                                    <div class="pocket-rail" style="position: absolute; top: 100px; left: 0; right: 0; height: 50px; z-index: 30;"></div>
+                                    <div class="pocket-rail" style="position: absolute; top: 250px; left: 0; right: 0; height: 50px; z-index: 40;"></div>
+                                    <div class="pocket-rail" style="position: absolute; top: 400px; left: 0; right: 0; height: 50px; z-index: 50;"></div>
+                                </div>
+                                <div class="door-grid">
+                                    <div th:each="item : ${freshItems}" class="ingredient-card"
+                                         th:onclick="toggleIngredient(this, [[${item.toIngredientString()}]])">
+                                        <span class="discount-rate fw-bold" th:if="${item.originalPrice != null and item.originalPrice > item.discountPrice}" th:text="|${#numbers.formatInteger((item.originalPrice - item.discountPrice) * 100.0 / item.originalPrice, 0)}%↓|"></span>
+                                        <div class="ingredient-name" th:text="${item.toIngredientString()}">식재료</div>
+                                        <div class="ingredient-price-info">
+                                            <span class="ingredient-price" th:if="${item.originalPrice != null and item.originalPrice > item.discountPrice}" th:text="|${#numbers.formatInteger(item.originalPrice, 0, 'COMMA')}원|"></span>
+                                            <span class="ingredient-discount" th:text="|${#numbers.formatInteger(item.discountPrice, 0, 'COMMA')}원|"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="door-guard-shelf" onclick="toggleFridge()"></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="recommend-footer">
+    <div class="container text-center">
+        <p class="mb-1 text-white-50">
+            <span class="fw-semibold" style="background:linear-gradient(135deg,#3b82f6,#8b5cf6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">냉장고 레시피</span>
+            &nbsp;—&nbsp; AI가 추천하는 오늘의 레시피
+        </p>
+        <p class="mb-0 text-white-50 small">&copy; 2026 RecipeKR. Built with Spring Boot 3 &amp; Python AI</p>
+    </div>
+</footer>
+
+<div th:replace="~{fragments/chatbot :: chatbot}"></div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // SVG 아이콘 매핑 데이터 (선화 디자인)
+    const iconLibrary = {
+        '양파': '<circle cx="12" cy="14" r="7"/><path d="M12 7 C12 3 12 2 12 2 M12 21 V23 M9 21 L8 23 M15 21 L16 23"/>',
+        '마늘': '<path d="M12 4 C10 8 6 12 6 16 C6 19.3 8.7 22 12 22 C15.3 22 18 19.3 18 16 C18 12 14 8 12 4 Z"/>',
+        '고추': '<path d="M8 6 C14 6 20 10 20 16 C20 18 18 20 16 20 C10 20 6 14 6 8 C6 6 8 6 8 6 Z M8 6 C6 4 4 4 4 4"/>',
+        '오이': '<rect x="6" y="4" width="12" height="16" rx="6" transform="rotate(45 12 12)"/><circle cx="10" cy="10" r="1"/><circle cx="14" cy="14" r="1"/><circle cx="10" cy="14" r="1"/>',
+        '상추': '<path d="M12 20 C8 20 4 16 4 10 C4 6 8 4 12 4 C16 4 20 6 20 10 C20 16 16 20 12 20 Z"/><path d="M12 20 V8 M8 12 C8 12 10 10 12 10 M16 12 C16 12 14 10 12 10"/>',
+        '콩나물': '<circle cx="12" cy="6" r="3"/><path d="M12 9 C12 15 10 18 10 22 M14 6 C16 6 18 8 18 10"/>',
+        '두부': '<rect x="4" y="6" width="16" height="12" rx="2"/><path d="M8 6 V18 M16 6 V18 M4 12 H20"/>',
+        '시금치': '<path d="M12 22 V14 M12 14 C8 14 4 10 4 6 C4 4 6 2 8 2 C10 2 12 10 12 10 C12 10 14 2 16 2 C18 2 20 4 20 6 C20 10 16 14 12 14 Z"/>',
+        '브로콜리': '<path d="M12 22 V14 M12 14 C16 14 18 10 18 8 C18 6 16 4 14 4 C12 4 12 8 12 8 C12 8 12 4 10 4 C8 4 6 6 6 8 C6 10 8 14 12 14 Z"/><circle cx="14" cy="6" r="3"/><circle cx="10" cy="6" r="3"/><circle cx="12" cy="9" r="3"/>',
+        '당근': '<path d="M16 8 L6 18 C4.9 19.1 3.5 19.1 2.4 18 C1.3 16.9 1.3 15.5 2.4 14.4 L12.4 4.4"/><path d="M16 8 L20 4 M16 8 L22 8 M16 8 L18 2"/>',
+        '계란': '<ellipse cx="12" cy="14" rx="6" ry="8"/>',
+        '돼지': '<path d="M6 14 C6 18 18 18 18 14 C18 10 14 8 12 8 C10 8 6 10 6 14 Z M10 14 H14 M12 12 V16"/>',
+        '소고기': '<path d="M4 14 C4 18 20 18 20 14 C20 8 16 6 12 6 C8 6 4 8 4 14 Z M8 14 H16"/>',
+        '닭고기': '<path d="M8 18 C6 18 4 16 4 14 C4 10 8 8 12 8 C16 8 20 10 20 14 C20 16 18 18 16 18 Z M16 18 L18 22 M8 18 L6 22 M16 8 C16 4 12 2 12 2 C12 2 8 4 8 8"/>',
+        '오리고기': '<path d="M12 8 C14 8 16 6 16 4 C16 2 14 1 12 1 C10 1 8 3 8 5 C8 7 10 8 12 8 Z M12 8 C8 8 4 10 4 14 C4 18 8 20 12 20 C16 20 20 18 20 14 C20 10 16 8 12 8 Z M7 14 H17"/>',
+        '갈치': '<path d="M4 12 C4 12 8 8 14 8 C20 8 22 12 22 12 C22 12 20 16 14 16 C8 16 4 12 4 12 Z M4 12 L2 8 L2 16 Z"/><circle cx="18" cy="11" r="1" fill="currentColor"/>',
+        '생선': '<path d="M4 12 C4 12 8 6 14 6 C20 6 20 12 20 12 C20 12 20 18 14 18 C8 18 4 12 4 12 Z M4 12 L2 8 L2 16 Z"/><circle cx="16" cy="10" r="1" fill="currentColor"/>',
+        '사과': '<circle cx="12" cy="14" r="8"/><path d="M12 6 C12 2 16 2 16 2 C16 2 14 6 12 6"/>',
+        '배': '<circle cx="12" cy="15" r="7"/><path d="M12 8 C10 8 9 10 9 12 C15 12 15 8 12 8 Z M12 8 V4 M12 4 C14 4 16 2 16 2"/>',
+        '감': '<circle cx="12" cy="14" r="7"/><path d="M12 7 H8 M12 7 H16 M12 7 V4"/>',
+        '감귤': '<circle cx="12" cy="14" r="7"/><path d="M12 7 V5 M12 5 C14 5 15 3 15 3"/><circle cx="10" cy="12" r="0.5" fill="currentColor"/><circle cx="14" cy="15" r="0.5" fill="currentColor"/><circle cx="9" cy="15" r="0.5" fill="currentColor"/>',
+        '복숭아': '<path d="M12 20 C6 20 4 14 6 10 C8 6 12 8 12 8 C12 8 16 6 18 10 C20 14 18 20 12 20 Z"/><path d="M12 20 C12 16 10 12 12 8"/>',
+        '포도': '<circle cx="12" cy="18" r="2"/><circle cx="10" cy="14" r="2"/><circle cx="14" cy="14" r="2"/><circle cx="8" cy="10" r="2"/><circle cx="12" cy="10" r="2"/><circle cx="16" cy="10" r="2"/><path d="M12 8 V4 M12 4 C15 4 16 2 16 2"/>',
+        '배추': '<path d="M8 20 C4 20 4 12 8 6 C12 4 16 4 16 10 C16 16 16 20 12 20 Z M8 6 C10 10 14 10 16 10 M12 20 V8"/>',
+        '수박': '<circle cx="12" cy="14" r="8"/><path d="M8 7 C10 10 10 18 8 21 M16 7 C14 10 14 18 16 21"/>',
+        '딸기': '<path d="M12 22 C6 22 4 12 8 6 C10 3 14 3 16 6 C20 12 18 22 12 22 Z M12 6 V2 M12 2 C14 2 16 4 16 4"/><circle cx="10" cy="12" r="0.5" fill="currentColor"/><circle cx="14" cy="14" r="0.5" fill="currentColor"/><circle cx="12" cy="16" r="0.5" fill="currentColor"/>',
+        '토마토': '<circle cx="12" cy="14" r="8"/><path d="M12 6 C10 6 8 4 8 4 M12 6 C14 6 16 4 16 4 M12 6 V4"/>',
+        '치즈': '<path d="M20 14 L12 20 L4 14 L12 8 Z M12 8 L12 2 M4 14 V18 L12 22 L20 18 V14"/><circle cx="10" cy="12" r="1"/><circle cx="14" cy="15" r="1"/>',
+        '참치': '<path d="M4 14 C4 18 20 18 20 14 V10 C20 6 4 6 4 10 Z"/><path d="M4 10 H20 M8 10 V14 M16 10 V14 M12 10 V14"/>',
+        '새우': '<path d="M16 6 C12 6 8 10 8 14 C8 18 12 20 16 20 M16 6 C18 6 20 8 20 10 C20 12 18 14 16 14 C14 14 12 12 12 10"/><path d="M8 14 L4 12 M8 16 L4 18"/>',
+        '무': '<path d="M12 2 C10 6 9 12 9 18 C9 20 10 22 12 22 C14 22 15 20 15 18 C15 12 14 6 12 2 Z M12 2 L10 0 M12 2 L12 0 M12 2 L14 0"/>',
+        '감자': '<path d="M12 5 C8 5 5 8 5 12 C5 16 8 19 12 19 C16 19 19 16 19 12 C19 8 16 5 12 5 Z"/><circle cx="9" cy="9" r="0.5" fill="currentColor"/><circle cx="15" cy="10" r="0.5" fill="currentColor"/><circle cx="10" cy="15" r="0.5" fill="currentColor"/><circle cx="14" cy="14" r="0.5" fill="currentColor"/>',
+        '고구마': '<path d="M4 12 C8 6 16 6 20 12 C16 18 8 18 4 12 Z M6 12 C8 11 12 11 14 12"/>',
+        '버섯': '<path d="M12 12 V20 C12 21 11 22 10 22 H14 C13 22 12 21 12 20 Z M5 12 C5 7 8 4 12 4 C16 4 19 7 19 12 H5 Z"/>',
+        '깻잎': '<path d="M12 2 C8 6 5 11 5 16 C5 19 8 21 12 21 C16 21 19 19 19 16 C19 11 16 6 12 2 Z M12 2 V21 M8 9 C8 9 10 11 12 11 M16 9 C16 9 14 11 12 11 M7 14 C7 14 10 15 12 15 M17 14 C17 14 14 15 12 15"/>',
+        '오리': '<path d="M12 8 C14 8 16 6 16 4 C16 2 14 1 12 1 C10 1 8 3 8 5 C8 7 10 8 12 8 Z M12 8 C8 8 4 10 4 14 C4 18 8 20 12 20 C16 20 20 18 20 14 C20 10 16 8 12 8 Z M7 14 H17"/>',
+        '고등어': '<path d="M2 12 C4 9 8 6 14 6 C18 6 20 9 22 12 C20 15 18 18 14 18 C8 18 4 15 2 12 Z M22 12 L24 9 L24 15 Z M10 6 C12 9 12 15 10 18"/><circle cx="17" cy="10" r="1"/>',
+        '연어': '<path d="M2 12 C4 9 8 6 14 6 C18 6 20 9 22 12 C20 15 18 18 14 18 C8 18 4 15 2 12 Z M22 12 L24 9 L24 15 Z M10 6 C12 9 12 15 10 18"/><circle cx="17" cy="10" r="1"/>',
+        '치킨': '<path d="M18 6 C15 6 12 9 12 12 C12 13 13 14 14 14 C15 14 16 12 17 12 C18 12 19 13 19 14 C19 15 18 16 16 16 C14 16 12 18 12 20 C12 21 13 22 14 22 C16 22 20 18 20 14 C20 10 20 6 18 6 Z M12 20 L8 22 C6 23 5 21 6 20 L9 18 M12 12 L7 10 C5 9.5 4 8 5 7 L8 9"/>',
+        '오징어': '<path d="M12 2 L6 8 H18 L12 2 Z M8 8 V16 C8 18 10 19 12 19 C14 19 16 18 16 16 V8 H8 Z M9 19 L7 23 M11 19 L10 23 M13 19 L14 23 M15 19 L17 23"/>',
+        '잔디': '<path d="M4 20 L6 10 M8 20 L12 6 M16 20 L14 10 M20 20 L18 12"/>',
+        '파': '<path d="M6 20 L18 4 M4 18 L16 2 M8 22 L20 6 M14 8 L18 12"/>',
+        '인삼': '<path d="M12 4 V10 M12 10 C10 14 8 18 6 20 M12 10 C14 14 16 18 18 20 M8 12 L4 10 M16 12 L20 10"/>',
+        'default': '<path d="M6 8 L18 8 L16 20 H8 Z M4 8 H20 M12 8 V4 M10 4 H14"/>'
+    };
+
+    // 각 아이콘에 매핑될 색상 (선화 아이콘을 아름답게 꾸미는 글래스모피즘 톤)
+    const iconColors = {
+        '양파': { stroke: '#d97706', fill: 'rgba(217, 119, 6, 0.1)' },
+        '마늘': { stroke: '#94a3b8', fill: 'rgba(148, 163, 184, 0.1)' },
+        '고추': { stroke: '#dc2626', fill: 'rgba(220, 38, 38, 0.1)' },
+        '오이': { stroke: '#16a34a', fill: 'rgba(22, 163, 74, 0.1)' },
+        '상추': { stroke: '#22c55e', fill: 'rgba(34, 197, 94, 0.1)' },
+        '콩나물': { stroke: '#eab308', fill: 'rgba(234, 179, 8, 0.1)' },
+        '두부': { stroke: '#64748b', fill: 'rgba(100, 116, 139, 0.1)' },
+        '시금치': { stroke: '#15803d', fill: 'rgba(21, 128, 61, 0.1)' },
+        '브로콜리': { stroke: '#166534', fill: 'rgba(22, 101, 52, 0.1)' },
+        '당근': { stroke: '#f97316', fill: 'rgba(249, 115, 22, 0.1)' },
+        '계란': { stroke: '#f59e0b', fill: 'rgba(245, 158, 11, 0.1)' },
+        '돼지': { stroke: '#ec4899', fill: 'rgba(236, 72, 153, 0.1)' },
+        '소고기': { stroke: '#b91c1c', fill: 'rgba(185, 28, 28, 0.1)' },
+        '닭고기': { stroke: '#fbbf24', fill: 'rgba(251, 191, 36, 0.1)' },
+        '오리고기': { stroke: '#d97706', fill: 'rgba(217, 119, 6, 0.1)' },
+        '갈치': { stroke: '#38bdf8', fill: 'rgba(56, 189, 248, 0.1)' },
+        '생선': { stroke: '#0284c7', fill: 'rgba(2, 132, 199, 0.1)' },
+        '사과': { stroke: '#e11d48', fill: 'rgba(225, 29, 72, 0.1)' },
+        '배': { stroke: '#84cc16', fill: 'rgba(132, 204, 22, 0.1)' },
+        '감': { stroke: '#ea580c', fill: 'rgba(234, 88, 12, 0.1)' },
+        '감귤': { stroke: '#f97316', fill: 'rgba(249, 115, 22, 0.1)' },
+        '복숭아': { stroke: '#fda4af', fill: 'rgba(253, 164, 175, 0.15)' },
+        '포도': { stroke: '#8b5cf6', fill: 'rgba(139, 92, 246, 0.1)' },
+        '배추': { stroke: '#4ade80', fill: 'rgba(74, 222, 128, 0.1)' },
+        '수박': { stroke: '#15803d', fill: 'rgba(21, 128, 61, 0.1)' },
+        '딸기': { stroke: '#e11d48', fill: 'rgba(225, 29, 72, 0.1)' },
+        '토마토': { stroke: '#dc2626', fill: 'rgba(220, 38, 38, 0.1)' },
+        '치즈': { stroke: '#eab308', fill: 'rgba(234, 179, 8, 0.1)' },
+        '참치': { stroke: '#1e3a8a', fill: 'rgba(30, 58, 138, 0.1)' },
+        '새우': { stroke: '#f87171', fill: 'rgba(248, 113, 113, 0.1)' },
+        '무': { stroke: '#22c55e', fill: 'rgba(34, 197, 94, 0.05)' },
+        '감자': { stroke: '#d97706', fill: 'rgba(217, 119, 6, 0.08)' },
+        '고구마': { stroke: '#a855f7', fill: 'rgba(168, 85, 247, 0.08)' },
+        '버섯': { stroke: '#78716c', fill: 'rgba(120, 113, 108, 0.1)' },
+        '깻잎': { stroke: '#15803d', fill: 'rgba(21, 128, 61, 0.1)' },
+        '오리': { stroke: '#b45309', fill: 'rgba(180, 83, 9, 0.08)' },
+        '고등어': { stroke: '#0284c7', fill: 'rgba(2, 132, 199, 0.1)' },
+        '연어': { stroke: '#f97316', fill: 'rgba(249, 115, 22, 0.1)' },
+        '치킨': { stroke: '#b45309', fill: 'rgba(180, 83, 9, 0.08)' },
+        '오징어': { stroke: '#94a3b8', fill: 'rgba(148, 163, 184, 0.08)' },
+        '잔디': { stroke: '#10b981', fill: 'rgba(16, 185, 129, 0.1)' },
+        '파': { stroke: '#22c55e', fill: 'rgba(34, 197, 94, 0.1)' },
+        '인삼': { stroke: '#d97706', fill: 'rgba(217, 119, 6, 0.1)' },
+        'default': { stroke: '#64748b', fill: 'rgba(100, 116, 139, 0.05)' }
+    };
+
+    // 아이콘 자동 매핑 실행 및 컬러/필 적용
+    document.querySelectorAll('.ingredient-icon-wrapper').forEach(wrapper => {
+        const name = wrapper.getAttribute('data-name') || '';
+        let matchedIcon = iconLibrary['default'];
+        
+        for (const [key, svgPath] of Object.entries(iconLibrary)) {
+            if (name.includes(key)) {
+                matchedIcon = svgPath;
+                break;
+            }
+        }
+        
+        const svg = wrapper.querySelector('svg');
+        if (svg) {
+            svg.innerHTML = matchedIcon;
+            
+            // 색상 테마 자동 할당
+            let colorTheme = iconColors['default'];
+            for (const [key, theme] of Object.entries(iconColors)) {
+                if (name.includes(key)) {
+                    colorTheme = theme;
+                    break;
+                }
+            }
+            svg.setAttribute('stroke', colorTheme.stroke);
+            svg.setAttribute('fill', colorTheme.fill);
+        }
+    });
+
+    const leftDoor = document.getElementById('leftDoor');
+    const rightDoor = document.getElementById('rightDoor');
+    let isOpen = false;
+
+    function toggleFridge() {
+        if (!isOpen) {
+            leftDoor.classList.add('open');
+            rightDoor.classList.add('open');
+            isOpen = true;
+        } else {
+            leftDoor.classList.remove('open');
+            rightDoor.classList.remove('open');
+            isOpen = false;
+        }
+    }
+
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('open') === 'true') {
+        leftDoor.querySelector('.door-inner').style.transition = 'none';
+        rightDoor.querySelector('.door-inner').style.transition = 'none';
+        leftDoor.classList.add('open');
+        rightDoor.classList.add('open');
+        isOpen = true;
+        setTimeout(() => {
+            leftDoor.querySelector('.door-inner').style.transition = '';
+            rightDoor.querySelector('.door-inner').style.transition = '';
+        }, 50);
+    }
+
+    function runCrawler() {
+        const btn = document.getElementById('crawlBtn');
+        btn.innerHTML = '<div class="btn-progress-fill" id="crawlProgress"></div><span class="cart-icon-runner" id="crawlCart"><i class="bi bi-cart3"></i></span><span class="btn-content" style="padding-left:15px;">장보는 중...</span>';
+        btn.classList.add('disabled', 'btn-loading-state');
+        
+        const progressBar = document.getElementById('crawlProgress');
+        const cartIcon = document.getElementById('crawlCart');
+        let p = 0;
+        let speed = 0.4; // 약 12.5초에 걸쳐 100% 도달 (0.4 * 20 = 초당 8%)
+        let fetchDone = false;
+        
+        const interval = setInterval(() => {
+            if (!fetchDone) {
+                if (p < 85) {
+                    p += speed;
+                } else if (p < 99) {
+                    // 85% 이후부터는 완전히 멈추지 않고 아주 조금씩(1/10 속도) 증가하여 99%까지만 도달
+                    p += (speed * 0.1);
+                }
+            } else {
+                // 완료 시 100%까지 빠르게 가속
+                p += speed;
+                if (p >= 100) {
+                    p = 100;
+                    clearInterval(interval);
+                    window.location.href = '/recipe/recommend?open=true';
+                }
+            }
+            progressBar.style.width = p + '%';
+            cartIcon.style.left = p + '%';
+        }, 50);
+
+        const csrfEl = document.querySelector('input[name="_csrf"]');
+        const headers = { 'Content-Type': 'application/json' };
+        if (csrfEl) {
+            headers['X-CSRF-TOKEN'] = csrfEl.value;
+        }
+        
+        fetch('/api/crawler/run', { method: 'POST', headers: headers })
+            .then(() => {
+                fetchDone = true;
+                speed = 2.5; // 크롤링 완료 시 부드럽게 끝까지 가속
+            })
+            .catch(() => {
+                fetchDone = true;
+                speed = 2.5;
+            });
+    }
+    const selectedIngredients = new Set();
+    const inputEl = document.getElementById('selectedIngredientsInput');
+    const displayEl = document.getElementById('selectedIngredientsDisplay');
+    const submitBtn = document.getElementById('submitBtn');
+
+    window.addRecommendedIngredient = function(itemName) {
+        if(!isOpen) {
+            toggleFridge();
+        }
+        let found = false;
+        document.querySelectorAll('.ingredient-card').forEach(card => {
+            const nameEl = card.querySelector('.ingredient-name');
+            if (nameEl && nameEl.textContent.trim().includes(itemName)) {
+                const fullName = nameEl.textContent.trim();
+                if (!selectedIngredients.has(fullName)) {
+                    window.toggleIngredient(card, fullName);
+                }
+                found = true;
+            }
+        });
+        if (!found) {
+            if (!selectedIngredients.has(itemName)) {
+                selectedIngredients.add(itemName);
+                updateDisplay();
+            }
+        }
+    };
+
+    window.toggleIngredient = function(cardElement, itemName) {
+        if(!isOpen) return; 
+        if(selectedIngredients.has(itemName)) { selectedIngredients.delete(itemName); cardElement.classList.remove('selected'); }
+        else { selectedIngredients.add(itemName); cardElement.classList.add('selected'); }
+        updateDisplay();
+    };
+    window.removeIngredient = function(itemName) {
+        selectedIngredients.delete(itemName);
+        document.querySelectorAll('.ingredient-card').forEach(c => {
+            if(c.querySelector('.ingredient-name').textContent === itemName) c.classList.remove('selected');
+        });
+        updateDisplay();
+    };
+    window.resetSelection = function() {
+        selectedIngredients.clear();
+        document.querySelectorAll('.ingredient-card.selected').forEach(c => c.classList.remove('selected'));
+        updateDisplay();
+    };
+    function updateDisplay() {
+        const arr = Array.from(selectedIngredients);
+        inputEl.value = arr.join(', ');
+        if(!arr.length) {
+            displayEl.innerHTML = '<span class="text-muted small ms-1" style="opacity: 0.4;">재료 카드를 클릭하세요.</span>';
+            submitBtn.innerHTML = '<i class="bi bi-magic me-1"></i>추천 받기'; 
+        } else {
+            displayEl.innerHTML = arr.map(n => `<span class="tag-item">${n}<span class="remove-tag" onclick="removeIngredient('${n}')">&times;</span></span>`).join('');
+        }
+    }
+    
+    document.getElementById('recipeForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // 기본 폼 제출 방지
+        
+        if (selectedIngredients.size === 0) {
+            alert('냉장고에서 재료를 하나 이상 클릭하여 선택해주세요.');
+            return false;
+        }
+        
+        const submitBtn = document.getElementById('submitBtn');
+        submitBtn.innerHTML = '<div class="btn-progress-fill" id="recipeProgress"></div><span class="btn-content"><span class="cook-icon"><i class="bi bi-egg-fried"></i></span>레시피 작성...</span>';
+        submitBtn.classList.add('disabled', 'btn-loading-state');
+        
+        const progressBar = document.getElementById('recipeProgress');
+        let p = 0;
+        let speed = 0.6; // 약 8.5초에 걸쳐 100% 도달 (초당 12%)
+        let fetchDone = false;
+        let responseHtml = null;
+        
+        // 프로그레스 바 채우기
+        const interval = setInterval(() => {
+            if (!fetchDone) {
+                if (p < 85) {
+                    p += speed;
+                } else if (p < 99) {
+                    p += (speed * 0.05); // 거의 멈춘 듯 천천히 증가
+                }
+            } else {
+                p += speed; // 완료 시 빠르게 100% 도달
+                if (p >= 100) {
+                    p = 100;
+                    clearInterval(interval);
+                    if (responseHtml) {
+                        document.open();
+                        document.write(responseHtml);
+                        document.close();
+                    }
+                }
+            }
+            progressBar.style.width = p + '%';
+        }, 50);
+        
+        // Fetch API로 폼 전송
+        const formData = new FormData(this);
+        fetch(this.action, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(response => response.text())
+        .then(html => {
+            // 요청 완료 시 남은 거리를 부드럽게 가속하여 채움
+            responseHtml = html;
+            fetchDone = true;
+            speed = 3.0; // 빠르게 100%로 진행
+        })
+        .catch(err => {
+            clearInterval(interval);
+            alert('추천 중 오류가 발생했습니다.');
+            submitBtn.classList.remove('disabled', 'btn-loading-state');
+            updateDisplay();
+        });
+    });
+
+    // ── 오프캔버스 햄버거 메뉴 애니메이션 ──
+    const offcanvasNavbar = document.getElementById('navbarContent');
+    const customToggler = document.querySelector('.custom-toggler');
+    if (offcanvasNavbar && customToggler) {
+        offcanvasNavbar.addEventListener('show.bs.offcanvas', () => customToggler.classList.add('open'));
+        offcanvasNavbar.addEventListener('hide.bs.offcanvas', () => customToggler.classList.remove('open'));
+    }
+</script>
+</body>
+</html>

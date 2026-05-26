@@ -1,0 +1,36 @@
+spring:
+  profiles:
+    active: tidb
+
+  thymeleaf:
+    cache: false
+    encoding: UTF-8
+    mode: HTML
+
+  devtools:
+    livereload:
+      enabled: true
+    restart:
+      enabled: true
+
+  web:
+    resources:
+      static-locations: classpath:/static/
+
+server:
+  port: 8080
+  servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+    session:
+      timeout: 30m
+
+logging:
+  charset:
+    console: UTF-8
+    file: UTF-8
+  level:
+    com.recipekr: DEBUG
+    org.springframework.security: DEBUG

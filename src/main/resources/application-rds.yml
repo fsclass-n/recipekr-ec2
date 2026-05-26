@@ -1,0 +1,8 @@
+spring:
+  datasource:
+    # AWS RDS MySQL 접속 정보
+    # GitHub Secrets 또는 로컬 OS 환경 변수를 통해 주입받습니다.
+    url: ${RDS_URL:jdbc:mysql://localhost:3306/recipekr}
+    username: ${RDS_USERNAME:root}
+    password: ${RDS_PASSWORD:password}
+    driver-class-name: com.mysql.cj.jdbc.Driver

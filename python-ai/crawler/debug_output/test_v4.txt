@@ -1,0 +1,1313 @@
+﻿
+=======================================================
+  ??뺣쭏??3??RPA ?щ·???쒖옉
+  ??? emart, lottemart, homeplus
+  紐⑤뱶: dry-run (DB ????놁쓬)
+=======================================================
+
+[?대쭏?? ?щ·留??쒖옉...
+python.exe : 2026-05-22 22:36:30,194 [INFO] emart_crawler - [?대쭏?? ?쒕룄 URL: 
+https://emart.ssg.com/plan/listPrd.ssg?mId=54&mCategoryCd=MU&dispCtgId=6000036831
+위치 줄:1 문자:1
++ & "C:\Users\whyei\anaconda3\envs\conda_venv\python.exe" -X utf8 "D:\g ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (2026-05-22 22:3...tgId=6000036831:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+2026-05-22 22:36:33,569 [INFO] emart_crawler - [?대쭏?? JS 異붿텧 ?꾨낫 ?? 0
+2026-05-22 22:36:33,570 [INFO] emart_crawler - [?대쭏?? ?쒕룄 URL: https://emart.ssg.com/
+2026-05-22 22:36:38,610 [INFO] emart_crawler - [?대쭏?? JS 異붿텧 ?꾨낫 ?? 64
+2026-05-22 22:36:38,615 [INFO] emart_crawler - [?대쭏?? ?щ·留??꾨즺: 55嫄?(URL: https://emart.ssg.com/)
+[?대쭏?? ?섏쭛 ?꾨즺: 55嫄?
+  - ?쇨껸??紐⑹떖援ъ씠 ??理쒕?~36%: 2,384??(36% ?좎씤)
+  - ?臾댁썝/鍮숆렇???멸린 ?좎젣???됱궗, 理쒕? ~50% ?좎씤: 4,980??(50% ?좎씤)
+  - ?⑥뀡?≫솕 ?꾩닔??(SSG ?앸같): 6,000??(50% ?좎씤)
+  ... ??52嫄?
+
+[濡?뜲留덊듃] ?щ·留??쒖옉...
+2026-05-22 22:36:38,615 [INFO] lottemart_crawler - [濡?뜲留덊듃] ?щ·留??쒖옉: 
+https://www.lottemart.com/display/page/event/weeklyspecial
+2026-05-22 22:36:42,868 [INFO] lottemart_crawler - [濡?뜲留덊듃] JS 異붿텧 ?꾨낫 ?? 11
+2026-05-22 22:36:42,869 [INFO] lottemart_crawler - [濡?뜲留덊듃] ?щ·留??꾨즺: 10嫄?
+[濡?뜲留덊듃] ?섏쭛 ?꾨즺: 10嫄?
+  - ?꾨찓由ъ뭅??2.1L: 3,490??
+  - ?ㅻ슌湲??쏅궇李멸린由?(450ML): 4,990??(60% ?좎씤)
+  - ?섏썝???묐뀗 ?쇱??뺢컝鍮?援ъ씠 (800G): 24,000??
+  ... ??7嫄?
+
+[?덊뵆?ъ뒪] ?щ·留??쒖옉...
+2026-05-22 22:36:42,869 [INFO] homeplus_crawler - [?덊뵆?ъ뒪] ?쒕룄 URL: https://homeplus.co.kr/Page/EventWeekly
+2026-05-22 22:36:49,685 [INFO] homeplus_crawler - [?덊뵆?ъ뒪] JS 異붿텧 ?꾨낫 ?? 40
+2026-05-22 22:36:49,688 [INFO] homeplus_crawler - [?덊뵆?ъ뒪] ?щ·留??꾨즺: 40嫄?(URL: https://homeplus.co.kr/Page/EventWeekly)
+[?덊뵆?ъ뒪] ?섏쭛 ?꾨즺: 40嫄?
+  - ?섎┝?ロ뫖??諛μ씠蹂댁빟 ???섎（?묎갚愿??56G: 4,400??(30% ?좎씤)
+  - LG?앺솢嫄닿컯 媛뺤븘吏諛쒖뵽??吏깃뎄?곗뒋 80留? 6,900??
+  - 誘몄쭊?묓뭹 諛곕??⑤뱶 ?쒖???100留?50*40): 8,900??(20% ?좎씤)
+  ... ??37嫄?
+
+=======================================================
+  ?꾩껜 ?꾨즺: 珥?105嫄??섏쭛
+=======================================================
+
+[
+  {
+    "market_name": "EMART",
+    "product_name": "?쇨껸??紐⑹떖援ъ씠 ??理쒕?~36%",
+    "ingredient_name": "?쇨껸??,
+    "original_price": 3700,
+    "discount_price": 2384,
+    "discount_rate": 36.0,
+    "discount_period": null,
+    "image_url": "https://sitem.ssgcdn.com/95/37/66/item/1000642663795_i1_290.jpg",
+    "product_url": "https://emart.ssg.com/item/dealItemView.ssg?itemId=1000642663795&siteNo=6001&salestrNo=2037",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "EMART",
+    "product_name": "?臾댁썝/鍮숆렇???멸린 ?좎젣???됱궗, 理쒕? ~50% ?좎씤",
+    "ingredient_name": "臾?,
+    "original_price": 10000,
+    "discount_price": 4980,
+    "discount_rate": 50.0,
+    "discount_period": null,
+    "image_url": "https://sitem.ssgcdn.com/86/32/75/item/1000647753286_i1_290.jpg",
+    "product_url": "https://emart.ssg.com/item/dealItemView.ssg?itemId=1000647753286&siteNo=6001&salestrNo=2037",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "EMART",
+    "product_name": "?⑥뀡?≫솕 ?꾩닔??(SSG ?앸같)",
+    "ingredient_name": "?⑥뀡?≫솕 ?꾩닔??,
+    "original_price": 12000,
+    "discount_price": 6000,
+    "discount_rate": 50.0,
+    "discount_period": null,
+    "image_url": "https://sitem.ssgcdn.com/85/26/11/item/1000828112685_i1_290.jpg",
+    "product_url": "https://emart.ssg.com/item/dealItemView.ssg?itemId=1000828112685&siteNo=6001&salestrNo=2037",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "EMART",
+    "product_name": "CJ?쒖씪?쒕떦",
+    "ingredient_name": "CJ?쒖씪?쒕떦",
+    "original_price": 8980,
+    "discount_price": 628,
+    "discount_rate": 30.0,
+    "discount_period": null,
+    "image_url": "https://sitem.ssgcdn.com/94/90/42/item/1000805429094_i1_290.jpg",
+    "product_url": "https://emart.ssg.com/item/itemView.ssg?itemId=1000805429094&siteNo=6001&salestrNo=2037",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "EMART",
+    "product_name": "愿묎퀬?? ?댄똻 ?닿린",
+    "ingredient_name": "愿묎퀬?? ?댄똻",
+    "original_price": null,
+    "discount_price": 2970,
+    "discount_rate": null,
+    "discount_period": null,
+    "image_url": "https://sitem.ssgcdn.com/33/00/37/item/1000042370033_i1_290.jpg",
+    "product_url": "https://emart.ssg.com/item/dealItemView.ssg?itemId=1000042370033&siteNo=6001&salestrNo=2037&advertBidId=1020470790&advertExtensTeryDivCd=10",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "EMART",
+    "product_name": "????移쇰줈由??뚯뒪&?쒕젅??~50%",
+    "ingredient_name": "???,
+    "original_price": 10000,
+    "discount_price": 4980,
+    "discount_rate": 50.0,
+    "discount_period": null,
+    "image_url": "https://sitem.ssgcdn.com/51/79/85/item/1000578857951_i1_290.jpg",
+    "product_url": "https://emart.ssg.com/item/dealItemView.ssg?itemId=1000578857951&siteNo=6001&salestrNo=2037",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "EMART",
+    "product_name": "?ㅼ뭅??,
+    "ingredient_name": "?ㅼ뭅??,
+    "original_price": null,
+    "discount_price": 5800,
+    "discount_rate": null,
+    "discount_period": null,
+    "image_url": "https://sitem.ssgcdn.com/90/04/29/item/1000824290490_i1_290.jpg",
+    "product_url": "https://emart.ssg.com/item/dealItemView.ssg?itemId=1000824290490&siteNo=6001&salestrNo=2037",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "EMART",
+    "product_name": "SSG ONLY 源?꾩쑄?고봽 ?섎Ъ ?밴?",
+    "ingredient_name": "SSG ONLY",
+    "original_price": 6000,
+    "discount_price": 4186,
+    "discount_rate": 30.0,
+    "discount_period": null,
+    "image_url": "https://sitem.ssgcdn.com/16/22/32/item/1000787322216_i1_290.jpg",
+    "product_url": "https://emart.ssg.com/item/dealItemView.ssg?itemId=1000787322216&siteNo=7009&salestrNo=2551",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "EMART",
+    "product_name": "?몃툕?쒕뱶",
+    "ingredient_name": "?몃툕?쒕뱶",
+    "original_price": 3480,
+    "discount_price": 243,
+    "discount_rate": 93.02,
+    "discount_period": null,
+    "image_url": "https://sitem.ssgcdn.com/45/80/53/item/1000040538045_i1_290.jpg",
+    "product_url": "https://emart.ssg.com/item/itemView.ssg?itemId=1000040538045&siteNo=6001&salestrNo=2037",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "EMART",
+    "product_name": "?몃툕?쒕뱶",
+    "ingredient_name": "?몃툕?쒕뱶",
+    "original_price": 1980,
+    "discount_price": 138,
+    "discount_rate": 93.03,
+    "discount_period": null,
+    "image_url": "https://sitem.ssgcdn.com/89/11/90/item/1000043901189_i1_290.jpg",
+    "product_url": "https://emart.ssg.com/item/itemView.ssg?itemId=1000043901189&siteNo=6001&salestrNo=2037",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "EMART",
+    "product_name": "?먯쉼?꾨Ⅴ???ъ숴 諛붾굹??1kg",
+    "ingredient_name": "諛붾굹??,
+    "original_price": 3680,
+    "discount_price": 257,
+    "discount_rate": 93.02,
+    "discount_period": null,
+    "image_url": "https://sitem.ssgcdn.com/13/90/11/item/1000044119013_i1_290.jpg",
+    "product_url": "https://emart.ssg.com/item/itemView.ssg?itemId=1000044119013&siteNo=6001&salestrNo=2037",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "EMART",
+    "product_name": "dole",
+    "ingredient_name": "dole",
+    "original_price": 4980,
+    "discount_price": 348,
+    "discount_rate": 93.01,
+    "discount_period": null,
+    "image_url": "https://sitem.ssgcdn.com/70/96/16/item/1000038169670_i1_290.jpg",
+    "product_url": "https://emart.ssg.com/item/itemView.ssg?itemId=1000038169670&siteNo=6001&salestrNo=2037",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "EMART",
+    "product_name": "諛붿궘??寃됯낵 已꾧퉫??移섏쫰??議고솕 媛꾪렪?섍쾶 利먭린??紐⑥쭨?먮씪 移섏쫰蹂?,
+    "ingredient_name": "移섏쫰",
+    "original_price": 15900,
+    "discount_price": 7480,
+    "discount_rate": 53.0,
+    "discount_period": null,
+    "image_url": "https://sitem.ssgcdn.com/94/33/60/item/1000822603394_i1_400.jpg",
+    "product_url": "https://emart.ssg.com/item/itemView.ssg?itemId=1000822603394&siteNo=7009&salestrNo=2551",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "EMART",
+    "product_name": "?쇱?怨좉린? ?쇱콈 ?щ퓤 鍮꾨퉬怨??뺣쭔??,
+    "ingredient_name": "?쇱?怨좉린",
+    "original_price": 12800,
+    "discount_price": 8980,
+    "discount_rate": 30.0,
+    "discount_period": null,
+    "image_url": "https://sitem.ssgcdn.com/94/90/42/item/1000805429094_i1_400.jpg",
+    "product_url": "https://emart.ssg.com/item/itemView.ssg?itemId=1000805429094&siteNo=7009&salestrNo=2551",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "EMART",
+    "product_name": "?ㅻえ媛由?源移섏컡媛쒕씪硫?,
+    "ingredient_name": "?쇰㈃",
+    "original_price": null,
+    "discount_price": 8000,
+    "discount_rate": null,
+    "discount_period": null,
+    "image_url": "https://sitem.ssgcdn.com/73/91/42/item/2097002429173_i1_400.jpg",
+    "product_url": "https://emart.ssg.com/item/itemView.ssg?itemId=2097002429173&siteNo=7009&salestrNo=2551",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "EMART",
+    "product_name": "7?대읇",
+    "ingredient_name": "7?대읇",
+    "original_price": null,
+    "discount_price": 170,
+    "discount_rate": null,
+    "discount_period": null,
+    "image_url": "https://sitem.ssgcdn.com/83/21/67/item/1000829672183_i1_604.jpg",
+    "product_url": "https://shinsegaemall.ssg.com/item/itemView.ssg?itemId=1000829672183&siteNo=6004&salestrNo=6005",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "EMART",
+    "product_name": "7?대읇",
+    "ingredient_name": "7?대읇",
+    "original_price": 42100,
+    "discount_price": 34920,
+    "discount_rate": 17.0,
+    "discount_period": null,
+    "image_url": "https://sitem.ssgcdn.com/68/66/08/item/1000829086668_i1_604.jpg",
+    "product_url": "https://department.ssg.com/item/itemView.ssg?itemId=1000829086668&siteNo=6009&salestrNo=1024",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "EMART",
+    "product_name": "7?대읇",
+    "ingredient_name": "7?대읇",
+    "original_price": 6631,
+    "discount_price": 246,
+    "discount_rate": 5.0,
+    "discount_period": null,
+    "image_url": "https://sitem.ssgcdn.com/79/79/66/item/1000829667979_i1_604.jpg",
+    "product_url": "https://emart.ssg.com/item/itemView.ssg?itemId=1000829667979&siteNo=7009&salestrNo=2551",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "EMART",
+    "product_name": "7?대읇",
+    "ingredient_name": "7?대읇",
+    "original_price": 4580,
+    "discount_price": 320,
+    "discount_rate": 93.01,
+    "discount_period": null,
+    "image_url": "https://sitem.ssgcdn.com/13/53/19/item/1000813195313_i1_604.jpg",
+    "product_url": "https://emart.ssg.com/item/itemView.ssg?itemId=1000813195313&siteNo=6001&salestrNo=2037",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "EMART",
+    "product_name": "?몃툕?쒕뱶",
+    "ingredient_name": "?몃툕?쒕뱶",
+    "original_price": null,
+    "discount_price": 980,
+    "discount_rate": null,
+    "discount_period": null,
+    "image_url": "https://sitem.ssgcdn.com/09/22/61/item/1000051612209_i1_290.jpg",
+    "product_url": "https://emart.ssg.com/item/itemView.ssg?itemId=1000051612209&siteNo=6001&salestrNo=2037",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "EMART",
+    "product_name": "?몃툕?쒕뱶",
+    "ingredient_name": "?몃툕?쒕뱶",
+    "original_price": 1890,
+    "discount_price": 132,
+    "discount_rate": 93.02,
+    "discount_period": null,
+    "image_url": "https://sitem.ssgcdn.com/67/89/62/item/1000277628967_i1_290.jpg",
+    "product_url": "https://emart.ssg.com/item/itemView.ssg?itemId=1000277628967&siteNo=6001&salestrNo=2037",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "EMART",
+    "product_name": "?몃툕?쒕뱶",
+    "ingredient_name": "?몃툕?쒕뱶",
+    "original_price": 1880,
+    "discount_price": 131,
+    "discount_rate": 93.03,
+    "discount_period": null,
+    "image_url": "https://sitem.ssgcdn.com/50/80/73/item/1000018738050_i1_290.jpg",
+    "product_url": "https://emart.ssg.com/item/itemView.ssg?itemId=1000018738050&siteNo=6001&salestrNo=2037",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "EMART",
+    "product_name": "?몃툕?쒕뱶",
+    "ingredient_name": "?몃툕?쒕뱶",
+    "original_price": 5480,
+    "discount_price": 383,
+    "discount_rate": 93.01,
+    "discount_period": null,
+    "image_url": "https://sitem.ssgcdn.com/84/59/06/item/1000029065984_i1_290.jpg",
+    "product_url": "https://emart.ssg.com/item/itemView.ssg?itemId=1000029065984&siteNo=6001&salestrNo=2037",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "EMART",
+    "product_name": "?쇱퐫??,
+    "ingredient_name": "?쇱퐫??,
+    "original_price": 7184,
+    "discount_price": 502,
+    "discount_rate": 20.0,
+    "discount_period": null,
+    "image_url": "https://sitem.ssgcdn.com/90/18/85/item/1000004851890_i1_290.jpg",
+    "product_url": "https://emart.ssg.com/item/itemView.ssg?itemId=1000004851890&siteNo=6001&salestrNo=2037",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "EMART",
+    "product_name": "?留뚯떇 ?쇱깋 ?뚮뱶?꾩튂 4媛쒖엯",
+    "ingredient_name": "?留뚯떇 ?쇱깋",
+    "original_price": 8483,
+    "discount_price": 265,
+    "discount_rate": 15.0,
+    "discount_period": null,
+    "image_url": "https://sitem.ssgcdn.com/94/64/80/item/1000633806494_i1_290.jpg",
+    "product_url": "https://emart.ssg.com/item/itemView.ssg?itemId=1000633806494&siteNo=6001&salestrNo=2037",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "EMART",
+    "product_name": "?쇱퐫??,
+    "ingredient_name": "?쇱퐫??,
+    "original_price": 4784,
+    "discount_price": 334,
+    "discount_rate": 20.0,
+    "discount_period": null,
+    "image_url": "https://sitem.ssgcdn.com/85/33/05/item/1000632053385_i1_290.jpg",
+    "product_url": "https://emart.ssg.com/item/itemView.ssg?itemId=1000632053385&siteNo=6001&salestrNo=2037",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "EMART",
+    "product_name": "?ㅼ튇?몃━",
+    "ingredient_name": "?ㅼ튇?몃━",
+    "original_price": 4480,
+    "discount_price": 313,
+    "discount_rate": 93.01,
+    "discount_period": null,
+    "image_url": "https://sitem.ssgcdn.com/08/03/05/item/1000062050308_i1_290.jpg",
+    "product_url": "https://emart.ssg.com/item/itemView.ssg?itemId=1000062050308&siteNo=6001&salestrNo=2037",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "EMART",
+    "product_name": "怨좎냼???몃? 釉뚮젅??360g",
+    "ingredient_name": "怨좎냼???몃?",
+    "original_price": null,
+    "discount_price": 277,
+    "discount_rate": null,
+    "discount_period": null,
+    "image_url": "https://sitem.ssgcdn.com/35/72/96/item/1000796967235_i1_290.jpg",
+    "product_url": "https://emart.ssg.com/item/itemView.ssg?itemId=1000796967235&siteNo=6001&salestrNo=2037",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "EMART",
+    "product_name": "?쇱퐫??,
+    "ingredient_name": "?쇱퐫??,
+    "original_price": 2480,
+    "discount_price": 173,
+    "discount_rate": 93.02,
+    "discount_period": null,
+    "image_url": "https://sitem.ssgcdn.com/48/20/78/item/1000682782048_i1_290.jpg",
+    "product_url": "https://emart.ssg.com/item/itemView.ssg?itemId=1000682782048&siteNo=6001&salestrNo=2037",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "EMART",
+    "product_name": "[?ㅼ튇?몃━]誘몃땲踰꾧굅 ?뚰떚??,
+    "ingredient_name": "[?ㅼ튇?몃━]誘몃땲踰꾧굅 ?뚰떚??,
+    "original_price": 10980,
+    "discount_price": 768,
+    "discount_rate": 93.01,
+    "discount_period": null,
+    "image_url": "https://sitem.ssgcdn.com/55/28/43/item/1000693432855_i1_290.jpg",
+    "product_url": "https://emart.ssg.com/item/itemView.ssg?itemId=1000693432855&siteNo=6001&salestrNo=2037",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "EMART",
+    "product_name": "[?ㅼ튇?몃━]?먰넗移??뚮뱶?꾩튂",
+    "ingredient_name": "[?ㅼ튇?몃━]?먰넗移??뚮뱶?꾩튂",
+    "original_price": 8480,
+    "discount_price": 593,
+    "discount_rate": 93.01,
+    "discount_period": null,
+    "image_url": "https://sitem.ssgcdn.com/56/12/65/item/1000648651256_i1_290.jpg",
+    "product_url": "https://emart.ssg.com/item/itemView.ssg?itemId=1000648651256&siteNo=6001&salestrNo=2037",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "EMART",
+    "product_name": "?ㅼ튇?몃━",
+    "ingredient_name": "?ㅼ튇?몃━",
+    "original_price": 11980,
+    "discount_price": 838,
+    "discount_rate": 93.01,
+    "discount_period": null,
+    "image_url": "https://sitem.ssgcdn.com/10/71/77/item/1000562777110_i1_290.jpg",
+    "product_url": "https://emart.ssg.com/item/itemView.ssg?itemId=1000562777110&siteNo=6001&salestrNo=2037",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "EMART",
+    "product_name": "?쇱퐫??,
+    "ingredient_name": "?쇱퐫??,
+    "original_price": 4980,
+    "discount_price": 348,
+    "discount_rate": 93.01,
+    "discount_period": null,
+    "image_url": "https://sitem.ssgcdn.com/36/63/17/item/1000049176336_i1_290.jpg",
+    "product_url": "https://emart.ssg.com/item/itemView.ssg?itemId=1000049176336&siteNo=6001&salestrNo=2037",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "EMART",
+    "product_name": "?꾨젋移섑넗?ㅽ듃_?꾩뿉洹몄빞梨?25g",
+    "ingredient_name": "??,
+    "original_price": 12980,
+    "discount_price": 247,
+    "discount_rate": 30.0,
+    "discount_period": null,
+    "image_url": "https://sitem.ssgcdn.com/40/40/54/item/1000394544040_i1_290.jpg",
+    "product_url": "https://emart.ssg.com/item/itemView.ssg?itemId=1000394544040&siteNo=6001&salestrNo=2037",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "EMART",
+    "product_name": "[?ㅼ튇?몃━]?щ옖踰좊━ 移섑궓 ?뚮뱶?꾩튂",
+    "ingredient_name": "[?ㅼ튇?몃━]?щ옖踰좊━ 移섑궓",
+    "original_price": 8980,
+    "discount_price": 628,
+    "discount_rate": 93.01,
+    "discount_period": null,
+    "image_url": "https://sitem.ssgcdn.com/43/12/65/item/1000648651243_i1_290.jpg",
+    "product_url": "https://emart.ssg.com/item/itemView.ssg?itemId=1000648651243&siteNo=6001&salestrNo=2037",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "EMART",
+    "product_name": "?댄똻 ?닿린",
+    "ingredient_name": "?댄똻 ?닿린",
+    "original_price": 7980,
+    "discount_price": 558,
+    "discount_rate": 93.01,
+    "discount_period": null,
+    "image_url": "https://sitem.ssgcdn.com/12/41/88/item/1000030884112_i1_290.jpg",
+    "product_url": "https://emart.ssg.com/item/itemView.ssg?itemId=1000030884112&siteNo=6001&salestrNo=2037",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "EMART",
+    "product_name": "?몃툕?쒕뱶",
+    "ingredient_name": "?몃툕?쒕뱶",
+    "original_price": 6980,
+    "discount_price": 488,
+    "discount_rate": 93.01,
+    "discount_period": null,
+    "image_url": "https://sitem.ssgcdn.com/49/88/34/item/1000699348849_i1_290.jpg",
+    "product_url": "https://emart.ssg.com/item/itemView.ssg?itemId=1000699348849&siteNo=6001&salestrNo=2037",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "EMART",
+    "product_name": "諛깆삤??(5??遊?",
+    "ingredient_name": "諛깆삤??,
+    "original_price": null,
+    "discount_price": 208,
+    "discount_rate": null,
+    "discount_period": null,
+    "image_url": "https://sitem.ssgcdn.com/40/28/59/item/0000009592840_i1_290.jpg",
+    "product_url": "https://emart.ssg.com/item/itemView.ssg?itemId=0000009592840&siteNo=6001&salestrNo=2037",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "EMART",
+    "product_name": "?댄똻 ?닿린",
+    "ingredient_name": "?댄똻 ?닿린",
+    "original_price": 7680,
+    "discount_price": 427,
+    "discount_rate": 3.0,
+    "discount_period": null,
+    "image_url": "https://sitem.ssgcdn.com/37/65/26/item/1000785266537_i1_290.jpg",
+    "product_url": "https://emart.ssg.com/item/itemView.ssg?itemId=1000785266537&siteNo=6001&salestrNo=2037",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "EMART",
+    "product_name": "?쒖쐞 ?곸듅",
+    "ingredient_name": "?쒖쐞 ?곸듅",
+    "original_price": 3680,
+    "discount_price": 257,
+    "discount_rate": 93.02,
+    "discount_period": null,
+    "image_url": "https://sitem.ssgcdn.com/13/90/11/item/1000044119013_i1_290.jpg",
+    "product_url": "https://emart.ssg.com/item/itemView.ssg?itemId=1000044119013&siteNo=6001&salestrNo=2037",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "EMART",
+    "product_name": "?쒖쐞 ?섎씫",
+    "ingredient_name": "?쒖쐞 ?섎씫",
+    "original_price": 1980,
+    "discount_price": 138,
+    "discount_rate": 93.03,
+    "discount_period": null,
+    "image_url": "https://sitem.ssgcdn.com/89/11/90/item/1000043901189_i1_290.jpg",
+    "product_url": "https://emart.ssg.com/item/itemView.ssg?itemId=1000043901189&siteNo=6001&salestrNo=2037",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "EMART",
+    "product_name": "?쒖슱?곗쑀",
+    "ingredient_name": "?곗쑀",
+    "original_price": null,
+    "discount_price": 221,
+    "discount_rate": null,
+    "discount_period": null,
+    "image_url": "https://sitem.ssgcdn.com/65/85/62/item/0000007628565_i1_290.jpg",
+    "product_url": "https://emart.ssg.com/item/itemView.ssg?itemId=0000007628565&siteNo=6001&salestrNo=2037",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "EMART",
+    "product_name": "?쒖쐞 ?섎씫",
+    "ingredient_name": "?쒖쐞 ?섎씫",
+    "original_price": 149000,
+    "discount_price": 10430,
+    "discount_rate": 93.0,
+    "discount_period": null,
+    "image_url": "https://sitem.ssgcdn.com/48/69/93/item/1000827936948_i1_290.jpg",
+    "product_url": "https://emart.ssg.com/item/itemView.ssg?itemId=1000827936948&siteNo=6001&salestrNo=2567",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "EMART",
+    "product_name": "?뱀갔 ?ш낵 1.3kg (4~7?? 遊?,
+    "ingredient_name": "?ш낵",
+    "original_price": 16900,
+    "discount_price": 978,
+    "discount_rate": 94.21,
+    "discount_period": null,
+    "image_url": "https://sitem.ssgcdn.com/75/28/60/item/1000008602875_i1_290.jpg",
+    "product_url": "https://emart.ssg.com/item/itemView.ssg?itemId=1000008602875&siteNo=6001&salestrNo=2037",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "EMART",
+    "product_name": "?異붾갑?명넗留덊넗 1.5kg ??,
+    "ingredient_name": "?異붾갑?명넗留덊넗 1.5kg",
+    "original_price": 9920,
+    "discount_price": 661,
+    "discount_rate": 20.0,
+    "discount_period": null,
+    "image_url": "https://sitem.ssgcdn.com/04/54/95/item/1000547955404_i1_290.jpg",
+    "product_url": "https://emart.ssg.com/item/itemView.ssg?itemId=1000547955404&siteNo=6001&salestrNo=2037",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "EMART",
+    "product_name": "?숇떦洹?1kg 遊?,
+    "ingredient_name": "?밴렐",
+    "original_price": 3980,
+    "discount_price": 243,
+    "discount_rate": 93.89,
+    "discount_period": null,
+    "image_url": "https://sitem.ssgcdn.com/99/66/89/item/1000014896699_i1_290.jpg",
+    "product_url": "https://emart.ssg.com/item/itemView.ssg?itemId=1000014896699&siteNo=6001&salestrNo=2037",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "EMART",
+    "product_name": "1+1",
+    "ingredient_name": "1+1",
+    "original_price": null,
+    "discount_price": 374,
+    "discount_rate": null,
+    "discount_period": null,
+    "image_url": "https://sitem.ssgcdn.com/23/54/95/item/1000626955423_i1_290.jpg",
+    "product_url": "https://emart.ssg.com/item/itemView.ssg?itemId=1000626955423&siteNo=6001&salestrNo=2037",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "EMART",
+    "product_name": "?쒖슱?곗쑀",
+    "ingredient_name": "?곗쑀",
+    "original_price": null,
+    "discount_price": 260,
+    "discount_rate": null,
+    "discount_period": null,
+    "image_url": "https://sitem.ssgcdn.com/85/55/09/item/0000007095585_i1_290.jpg",
+    "product_url": "https://emart.ssg.com/item/itemView.ssg?itemId=0000007095585&siteNo=6001&salestrNo=2037",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "EMART",
+    "product_name": "?꾩궘?댁긽異?(200g)",
+    "ingredient_name": "?곸텛",
+    "original_price": 2980,
+    "discount_price": 495,
+    "discount_rate": 83.39,
+    "discount_period": null,
+    "image_url": "https://sitem.ssgcdn.com/14/59/75/item/1000005755914_i1_290.jpg",
+    "product_url": "https://emart.ssg.com/item/itemView.ssg?itemId=1000005755914&siteNo=6001&salestrNo=2037",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "EMART",
+    "product_name": "?쒖쐞 ?곸듅",
+    "ingredient_name": "?쒖쐞 ?곸듅",
+    "original_price": 9980,
+    "discount_price": 698,
+    "discount_rate": 23.0,
+    "discount_period": null,
+    "image_url": "https://sitem.ssgcdn.com/00/12/84/item/1000549841200_i1_290.jpg",
+    "product_url": "https://emart.ssg.com/item/itemView.ssg?itemId=1000549841200&siteNo=6001&salestrNo=2037",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "EMART",
+    "product_name": "?쒖쐞 ?곸듅",
+    "ingredient_name": "?쒖쐞 ?곸듅",
+    "original_price": 4150,
+    "discount_price": 290,
+    "discount_rate": 93.01,
+    "discount_period": null,
+    "image_url": "https://sitem.ssgcdn.com/48/36/33/item/0000008333648_i1_290.jpg",
+    "product_url": "https://emart.ssg.com/item/itemView.ssg?itemId=0000008333648&siteNo=6001&salestrNo=2037",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "EMART",
+    "product_name": "?쒖쐞 ?섎씫",
+    "ingredient_name": "?쒖쐞 ?섎씫",
+    "original_price": null,
+    "discount_price": 159,
+    "discount_rate": null,
+    "discount_period": null,
+    "image_url": "https://sitem.ssgcdn.com/16/79/70/item/0000009707916_i1_290.jpg",
+    "product_url": "https://emart.ssg.com/item/itemView.ssg?itemId=0000009707916&siteNo=6001&salestrNo=2037",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "EMART",
+    "product_name": "1+1",
+    "ingredient_name": "1+1",
+    "original_price": 6980,
+    "discount_price": 488,
+    "discount_rate": 93.01,
+    "discount_period": null,
+    "image_url": "https://sitem.ssgcdn.com/46/68/23/item/1000721236846_i1_290.jpg",
+    "product_url": "https://emart.ssg.com/item/itemView.ssg?itemId=1000721236846&siteNo=7009&salestrNo=2551",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "EMART",
+    "product_name": "?쒖쐞 ?섎씫",
+    "ingredient_name": "?쒖쐞 ?섎씫",
+    "original_price": 980,
+    "discount_price": 245,
+    "discount_rate": 75.0,
+    "discount_period": null,
+    "image_url": "https://sitem.ssgcdn.com/92/95/36/item/1000712369592_i1_290.jpg",
+    "product_url": "https://emart.ssg.com/item/itemView.ssg?itemId=1000712369592&siteNo=7009&salestrNo=2551",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "EMART",
+    "product_name": "?쒖쐞 ?섎씫",
+    "ingredient_name": "?쒖쐞 ?섎씫",
+    "original_price": null,
+    "discount_price": 102,
+    "discount_rate": null,
+    "discount_period": null,
+    "image_url": "https://sitem.ssgcdn.com/64/11/77/item/1000823771164_i1_290.jpg",
+    "product_url": "https://emart.ssg.com/item/itemView.ssg?itemId=1000823771164&siteNo=6001&salestrNo=2037",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "LOTTEMART",
+    "product_name": "?꾨찓由ъ뭅??2.1L",
+    "ingredient_name": "?꾨찓由ъ뭅??2.1L",
+    "original_price": null,
+    "discount_price": 3490,
+    "discount_rate": null,
+    "discount_period": null,
+    "image_url": "https://images.ctfassets.net/8ope8jx7a7m3/3us7R8fmZR8J0P9M6Sag8f/6cf4800906873de03d7d81a0dac96d4c/TS_goodtoday_260521_TL.jpg",
+    "product_url": "https://lottemartzetta.com/shop-in-shop/goodtoday?type=componentized&source=CAROUSEL_IMAGE",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "LOTTEMART",
+    "product_name": "?ㅻ슌湲??쏅궇李멸린由?(450ML)",
+    "ingredient_name": "李멸린由?,
+    "original_price": 12480,
+    "discount_price": 4990,
+    "discount_rate": 60.02,
+    "discount_period": null,
+    "image_url": "https://lottemartzetta.com/images-v3/932dcbc7-fca8-4d43-bcde-f73d1ce3cc7d/7ffb5ac2-6c3e-4ce6-8f2b-7fb7e5489753/300x300.jpg",
+    "product_url": "https://lottemartzetta.com/products/OS8801045440040/details",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "LOTTEMART",
+    "product_name": "?섏썝???묐뀗 ?쇱??뺢컝鍮?援ъ씠 (800G)",
+    "ingredient_name": "媛덈퉬",
+    "original_price": null,
+    "discount_price": 24000,
+    "discount_rate": null,
+    "discount_period": null,
+    "image_url": "https://lottemartzetta.com/images-v3/932dcbc7-fca8-4d43-bcde-f73d1ce3cc7d/01a45709-f778-4d4f-897e-deb68cb96b92/300x300.jpg",
+    "product_url": "https://lottemartzetta.com/products/OS8809394581568/details",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "LOTTEMART",
+    "product_name": "而룻똿 ?섎컯 (鸚? (800G/??",
+    "ingredient_name": "?섎컯",
+    "original_price": null,
+    "discount_price": 9990,
+    "discount_rate": null,
+    "discount_period": null,
+    "image_url": "https://lottemartzetta.com/images-v3/932dcbc7-fca8-4d43-bcde-f73d1ce3cc7d/83fe5d81-f2a9-49b3-8c74-d251babfaa4b/300x300.jpg",
+    "product_url": "https://lottemartzetta.com/products/OS8809597446633/details",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "LOTTEMART",
+    "product_name": "[?먯뼇???] ?먯쭏 ?ㅼ쭠??(留덈━)",
+    "ingredient_name": "[?먯뼇??,
+    "original_price": null,
+    "discount_price": 3100,
+    "discount_rate": 20.0,
+    "discount_period": null,
+    "image_url": "https://lottemartzetta.com/images-v3/932dcbc7-fca8-4d43-bcde-f73d1ce3cc7d/e8928ba1-fb45-4306-b7a8-93886d9b0be5/300x300.jpg",
+    "product_url": "https://lottemartzetta.com/products/OS2700000034736/details",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "LOTTEMART",
+    "product_name": "?띻??뺢린 ?묓뙆 3kg",
+    "ingredient_name": "?묓뙆",
+    "original_price": null,
+    "discount_price": 3992,
+    "discount_rate": null,
+    "discount_period": null,
+    "image_url": "https://images.ctfassets.net/8ope8jx7a7m3/1Y0Witbnv3huBRU21O60Q2/da1e069444fecff8438dfd59800ea299/bs_vegetable_tl.jpg",
+    "product_url": "https://lottemartzetta.com/shop-in-shop/weekvegetable1?type=componentized&source=CAROUSEL_IMAGE",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "LOTTEMART",
+    "product_name": "?깆＜ ?곸깮李몄쇅",
+    "ingredient_name": "李몄쇅",
+    "original_price": null,
+    "discount_price": 9990,
+    "discount_rate": null,
+    "discount_period": null,
+    "image_url": "https://images.ctfassets.net/8ope8jx7a7m3/44aGjytygDb67uiQDXxTBs/0829015a5b0f9861c709b6cda1c4156e/bs_fruit_tl.jpg",
+    "product_url": "https://lottemartzetta.com/shop-in-shop/weekfruit1?type=componentized&source=CAROUSEL_IMAGE",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "LOTTEMART",
+    "product_name": "誘멸뎅???꾨씪??泥숈븘?대·",
+    "ingredient_name": "誘멸뎅???꾨씪??,
+    "original_price": null,
+    "discount_price": 2790,
+    "discount_rate": null,
+    "discount_period": null,
+    "image_url": "https://images.ctfassets.net/8ope8jx7a7m3/4xLqCDvLOjV8l5Ig21JNi2/1293107dda2c8d8ca8cfa81d1fd8a8e0/bs_meat_tl.jpg",
+    "product_url": "https://lottemartzetta.com/shop-in-shop/meat_1?type=componentized&source=CAROUSEL_IMAGE",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "LOTTEMART",
+    "product_name": "臾쇨??덉젙 媛덉튂(?)",
+    "ingredient_name": "媛덉튂",
+    "original_price": null,
+    "discount_price": 4400,
+    "discount_rate": null,
+    "discount_period": null,
+    "image_url": "https://images.ctfassets.net/8ope8jx7a7m3/KliUYpYe6rcZa0cgyYPUf/c6b5275680645ef0d8dc77f4166d49b2/bs_fish_tl.jpg",
+    "product_url": "https://lottemartzetta.com/shop-in-shop/fish_1?type=componentized&source=CAROUSEL_IMAGE",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "LOTTEMART",
+    "product_name": "?덉슦 珥덈갈(20??",
+    "ingredient_name": "?덉슦",
+    "original_price": null,
+    "discount_price": 13990,
+    "discount_rate": null,
+    "discount_period": null,
+    "image_url": "https://images.ctfassets.net/8ope8jx7a7m3/6vODI8x4GyXWMlSi9I30VJ/37ca2a118643480cf66e1f2011aec2d2/bs_delhi_tl.jpg",
+    "product_url": "https://lottemartzetta.com/shop-in-shop/160125_delli?type=componentized&source=CAROUSEL_IMAGE",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "HOMEPLUS",
+    "product_name": "?섎┝?ロ뫖??諛μ씠蹂댁빟 ???섎（?묎갚愿??56G",
+    "ingredient_name": "?섎┝?ロ뫖??諛μ씠蹂댁빟",
+    "original_price": 6300,
+    "discount_price": 4400,
+    "discount_rate": 30.0,
+    "discount_period": "8/234",
+    "image_url": "https://image.homeplus.kr/it/068778473s0320?lastmod=20221005151148",
+    "product_url": "https://mfront.homeplus.co.kr/item?itemNo=068778473&storeType=HYPER",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "HOMEPLUS",
+    "product_name": "LG?앺솢嫄닿컯 媛뺤븘吏諛쒖뵽??吏깃뎄?곗뒋 80留?,
+    "ingredient_name": "LG?앺솢嫄닿컯 媛뺤븘吏諛쒖뵽??,
+    "original_price": null,
+    "discount_price": 6900,
+    "discount_rate": null,
+    "discount_period": "4/18",
+    "image_url": "https://image.homeplus.kr/it/071052008s0320?lastmod=20250417081254",
+    "product_url": "https://mfront.homeplus.co.kr/item?itemNo=071052008&storeType=HYPER",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "HOMEPLUS",
+    "product_name": "誘몄쭊?묓뭹 諛곕??⑤뱶 ?쒖???100留?50*40)",
+    "ingredient_name": "諛?,
+    "original_price": 11100,
+    "discount_price": 8900,
+    "discount_rate": 20.0,
+    "discount_period": "5/2",
+    "image_url": "https://image.homeplus.kr/it/071409855s0320?lastmod=20260514151956",
+    "product_url": "https://mfront.homeplus.co.kr/item?itemNo=071409855&storeType=HYPER",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "HOMEPLUS",
+    "product_name": "simplus ??퀬湲?怨좉뎄留????500G",
+    "ingredient_name": "??퀬湲?,
+    "original_price": 14300,
+    "discount_price": 9990,
+    "discount_rate": 30.0,
+    "discount_period": "9/10",
+    "image_url": "https://image.homeplus.kr/it/071069398s0320?lastmod=20250924181241",
+    "product_url": "https://mfront.homeplus.co.kr/item?itemNo=071069398&storeType=HYPER",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "HOMEPLUS",
+    "product_name": "simplus ??퀬湲곕쭚???ㅽ떛猿?500G",
+    "ingredient_name": "??퀬湲?,
+    "original_price": 14300,
+    "discount_price": 9990,
+    "discount_rate": 30.0,
+    "discount_period": "0/4",
+    "image_url": "https://image.homeplus.kr/it/071069467s0320?lastmod=20250924181250",
+    "product_url": "https://mfront.homeplus.co.kr/item?itemNo=071069467&storeType=HYPER",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "HOMEPLUS",
+    "product_name": "simplus ??퀬湲??щ씪?댁뒪 ?ㅽ떛猿?500G",
+    "ingredient_name": "??퀬湲?,
+    "original_price": 14300,
+    "discount_price": 9990,
+    "discount_rate": 30.0,
+    "discount_period": "0/3",
+    "image_url": "https://image.homeplus.kr/it/071069438s0320?lastmod=20250924181245",
+    "product_url": "https://mfront.homeplus.co.kr/item?itemNo=071069438&storeType=HYPER",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "HOMEPLUS",
+    "product_name": "simplus ??퀬湲??щ씪?댁뒪 ???500G",
+    "ingredient_name": "??퀬湲?,
+    "original_price": 14300,
+    "discount_price": 9990,
+    "discount_rate": 30.0,
+    "discount_period": "8/27",
+    "image_url": "https://image.homeplus.kr/it/071069260s0320?lastmod=20250924181232",
+    "product_url": "https://mfront.homeplus.co.kr/item?itemNo=071069260&storeType=HYPER",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "HOMEPLUS",
+    "product_name": "simplus ?뚭?二쎄퍕 500G",
+    "ingredient_name": "simplus ?뚭?二쎄퍕",
+    "original_price": 14300,
+    "discount_price": 9990,
+    "discount_rate": 30.0,
+    "discount_period": "1/7",
+    "image_url": "https://image.homeplus.kr/it/071069524s0320?lastmod=20251120131257",
+    "product_url": "https://mfront.homeplus.co.kr/item?itemNo=071069524&storeType=HYPER",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "HOMEPLUS",
+    "product_name": "simplus ?뚭퀬湲??щ씪?댁뒪 ???500G",
+    "ingredient_name": "?뚭퀬湲?,
+    "original_price": 14300,
+    "discount_price": 9990,
+    "discount_rate": 30.0,
+    "discount_period": "9/25",
+    "image_url": "https://image.homeplus.kr/it/071069317s0320?lastmod=20250924181239",
+    "product_url": "https://mfront.homeplus.co.kr/item?itemNo=071069317&storeType=HYPER",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "HOMEPLUS",
+    "product_name": "simplus ?ㅻ━怨좉린 怨좉뎄留????500G",
+    "ingredient_name": "?ㅻ━怨좉린",
+    "original_price": 14300,
+    "discount_price": 9990,
+    "discount_rate": 30.0,
+    "discount_period": "7/9",
+    "image_url": "https://image.homeplus.kr/it/071069421s0320?lastmod=20250924181243",
+    "product_url": "https://mfront.homeplus.co.kr/item?itemNo=071069421&storeType=HYPER",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "HOMEPLUS",
+    "product_name": "simplus ?ㅻ━怨좉린留먯씠 ?ㅽ떛猿?500G",
+    "ingredient_name": "?ㅻ━怨좉린",
+    "original_price": 14300,
+    "discount_price": 9990,
+    "discount_rate": 30.0,
+    "discount_period": "0/10",
+    "image_url": "https://image.homeplus.kr/it/071069484s0320?lastmod=20250924181255",
+    "product_url": "https://mfront.homeplus.co.kr/item?itemNo=071069484&storeType=HYPER",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "HOMEPLUS",
+    "product_name": "simplus ?ㅻ━怨좉린 ?щ씪?댁뒪 ?ㅽ떛猿?500G",
+    "ingredient_name": "?ㅻ━怨좉린",
+    "original_price": 14300,
+    "discount_price": 9990,
+    "discount_rate": 30.0,
+    "discount_period": "5/2",
+    "image_url": "https://image.homeplus.kr/it/071069444s0320?lastmod=20250924181247",
+    "product_url": "https://mfront.homeplus.co.kr/item?itemNo=071069444&storeType=HYPER",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "HOMEPLUS",
+    "product_name": "simplus ?ㅻ━怨좉린 ?щ씪?댁뒪 ???500G",
+    "ingredient_name": "?ㅻ━怨좉린",
+    "original_price": 14300,
+    "discount_price": 9990,
+    "discount_rate": 30.0,
+    "discount_period": "8/21",
+    "image_url": "https://image.homeplus.kr/it/071069294s0320?lastmod=20250924181235",
+    "product_url": "https://mfront.homeplus.co.kr/item?itemNo=071069294&storeType=HYPER",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "HOMEPLUS",
+    "product_name": "ThePet ?곗뼱?곗쑀 媛쒓퍕 160G",
+    "ingredient_name": "?곗뼱",
+    "original_price": 8100,
+    "discount_price": 6490,
+    "discount_rate": 20.0,
+    "discount_period": "8/179",
+    "image_url": "https://image.homeplus.kr/it/138312319s0320?lastmod=20210115211953",
+    "product_url": "https://mfront.homeplus.co.kr/item?itemNo=138312319&storeType=HYPER",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "HOMEPLUS",
+    "product_name": "ThePet ?ㅻ━?곗쑀 媛쒓퍕 160G",
+    "ingredient_name": "?곗쑀",
+    "original_price": 8100,
+    "discount_price": 6490,
+    "discount_rate": 20.0,
+    "discount_period": "8/129",
+    "image_url": "https://image.homeplus.kr/it/138312331s0320?lastmod=20210115212014",
+    "product_url": "https://mfront.homeplus.co.kr/item?itemNo=138312331&storeType=HYPER",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "HOMEPLUS",
+    "product_name": "?댄듃由ы뵆???由?????댁궡&?쇱콈 85G",
+    "ingredient_name": "????댁궡",
+    "original_price": null,
+    "discount_price": 2700,
+    "discount_rate": null,
+    "discount_period": "9/21",
+    "image_url": "https://image.homeplus.kr/it/070269111s0320?lastmod=20240108121218",
+    "product_url": "https://mfront.homeplus.co.kr/item?itemNo=070269111&storeType=HYPER",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "HOMEPLUS",
+    "product_name": "?댄듃由ы뵆???由??곗궡李몄튂&?쇱콈 85G",
+    "ingredient_name": "李몄튂",
+    "original_price": null,
+    "discount_price": 2700,
+    "discount_rate": null,
+    "discount_period": "9/28",
+    "image_url": "https://image.homeplus.kr/it/070269105s0320?lastmod=20231102081139",
+    "product_url": "https://mfront.homeplus.co.kr/item?itemNo=070269105&storeType=HYPER",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "HOMEPLUS",
+    "product_name": "?섎┝?ロ뫖??諛μ씠蹂댁빟 罹??몄뒪?몃젅??2KG",
+    "ingredient_name": "?섎┝?ロ뫖??諛μ씠蹂댁빟",
+    "original_price": 42600,
+    "discount_price": 29800,
+    "discount_rate": 30.0,
+    "discount_period": "7/23",
+    "image_url": "https://image.homeplus.kr/it/068797676s0320?lastmod=20220921111154",
+    "product_url": "https://mfront.homeplus.co.kr/item?itemNo=068797676&storeType=HYPER",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "HOMEPLUS",
+    "product_name": "?섎┝?ロ뫖??諛μ씠蹂댁빟 嫄닿컯?쒖옣 2KG",
+    "ingredient_name": "?섎┝?ロ뫖??諛μ씠蹂댁빟",
+    "original_price": 39700,
+    "discount_price": 27800,
+    "discount_rate": 30.0,
+    "discount_period": "8/49",
+    "image_url": "https://image.homeplus.kr/it/144955586s0320?lastmod=20210112174941",
+    "product_url": "https://mfront.homeplus.co.kr/item?itemNo=144955586&storeType=HYPER",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "HOMEPLUS",
+    "product_name": "?섎┝?ロ뫖??諛μ씠蹂댁빟 ?쇳듉?쒓???2KG",
+    "ingredient_name": "?섎┝?ロ뫖??諛μ씠蹂댁빟",
+    "original_price": 39700,
+    "discount_price": 27800,
+    "discount_rate": 30.0,
+    "discount_period": "7/86",
+    "image_url": "https://image.homeplus.kr/it/144955367s0320?lastmod=20210112174924",
+    "product_url": "https://mfront.homeplus.co.kr/item?itemNo=144955367&storeType=HYPER",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "HOMEPLUS",
+    "product_name": "ThePet 怨좉뎄留덈쭚??씠 1KG",
+    "ingredient_name": "怨좉뎄留?,
+    "original_price": 21100,
+    "discount_price": 16900,
+    "discount_rate": 20.0,
+    "discount_period": "7/205",
+    "image_url": "https://image.homeplus.kr/it/145781288s0320?lastmod=20210316071651",
+    "product_url": "https://mfront.homeplus.co.kr/item?itemNo=145781288&storeType=HYPER",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "HOMEPLUS",
+    "product_name": "ThePet ??媛?앸떞? ????댁궡 1KG",
+    "ingredient_name": "????댁궡",
+    "original_price": 28600,
+    "discount_price": 22900,
+    "discount_rate": 20.0,
+    "discount_period": "8/238",
+    "image_url": "https://image.homeplus.kr/it/064286871s0320?lastmod=20221024151145",
+    "product_url": "https://mfront.homeplus.co.kr/item?itemNo=064286871&storeType=HYPER",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "HOMEPLUS",
+    "product_name": "ThePet ??媛?앸떞? ??怨좉뎄留?1KG",
+    "ingredient_name": "怨좉뎄留?,
+    "original_price": 28600,
+    "discount_price": 22900,
+    "discount_rate": 20.0,
+    "discount_period": "7/149",
+    "image_url": "https://image.homeplus.kr/it/138244722s0320?lastmod=20221207162936",
+    "product_url": "https://mfront.homeplus.co.kr/item?itemNo=138244722&storeType=HYPER",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "HOMEPLUS",
+    "product_name": "ThePet ??媛?앸떞? ???щ씪?댁뒪 1KG",
+    "ingredient_name": "ThePet ??,
+    "original_price": 28600,
+    "discount_price": 22900,
+    "discount_rate": 20.0,
+    "discount_period": "8/348",
+    "image_url": "https://image.homeplus.kr/it/138244716s0320?lastmod=20230309111249",
+    "product_url": "https://mfront.homeplus.co.kr/item?itemNo=138244716&storeType=HYPER",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "HOMEPLUS",
+    "product_name": "ThePet ??媛?앸떞? ?ㅻ━媛?댁궡 1KG",
+    "ingredient_name": "ThePet ??,
+    "original_price": 28600,
+    "discount_price": 22900,
+    "discount_rate": 20.0,
+    "discount_period": "8/433",
+    "image_url": "https://image.homeplus.kr/it/138244703s0320?lastmod=20230309111247",
+    "product_url": "https://mfront.homeplus.co.kr/item?itemNo=138244703&storeType=HYPER",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "HOMEPLUS",
+    "product_name": "ThePet ??媛?앸떞? ?ㅻ━ 怨좉뎄留?1KG",
+    "ingredient_name": "怨좉뎄留?,
+    "original_price": 28600,
+    "discount_price": 22900,
+    "discount_rate": 20.0,
+    "discount_period": "8/249",
+    "image_url": "https://image.homeplus.kr/it/138244739s0320?lastmod=20221207160428",
+    "product_url": "https://mfront.homeplus.co.kr/item?itemNo=138244739&storeType=HYPER",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "HOMEPLUS",
+    "product_name": "ThePet ??媛?앸떞? ?ㅻ━ ?곗쑀猿?1KG",
+    "ingredient_name": "?곗쑀",
+    "original_price": 28600,
+    "discount_price": 22900,
+    "discount_rate": 20.0,
+    "discount_period": "8/198",
+    "image_url": "https://image.homeplus.kr/it/069349732s0320?lastmod=20240208065553",
+    "product_url": "https://mfront.homeplus.co.kr/item?itemNo=069349732&storeType=HYPER",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "HOMEPLUS",
+    "product_name": "ThePet ??媛?앸떞? 移섑궓 ?곗쑀猿?1KG",
+    "ingredient_name": "?곗쑀",
+    "original_price": 28600,
+    "discount_price": 22900,
+    "discount_rate": 20.0,
+    "discount_period": "8/266",
+    "image_url": "https://image.homeplus.kr/it/069349716s0320?lastmod=20240208065746",
+    "product_url": "https://mfront.homeplus.co.kr/item?itemNo=069349716&storeType=HYPER",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "HOMEPLUS",
+    "product_name": "ThePet 諛붾Ⅸ癒밴굅由???퀬援щ쭏 300G",
+    "ingredient_name": "怨좉뎄留?,
+    "original_price": 16100,
+    "discount_price": 12900,
+    "discount_rate": 20.0,
+    "discount_period": "6/5",
+    "image_url": "https://image.homeplus.kr/it/071098841s0320?lastmod=20250728181239",
+    "product_url": "https://mfront.homeplus.co.kr/item?itemNo=071098841&storeType=HYPER",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "HOMEPLUS",
+    "product_name": "ThePet 諛붾Ⅸ癒밴굅由???퀬湲곗쑁??300G",
+    "ingredient_name": "??퀬湲?,
+    "original_price": 16100,
+    "discount_price": 12900,
+    "discount_rate": 20.0,
+    "discount_period": "9/26",
+    "image_url": "https://image.homeplus.kr/it/071098806s0320?lastmod=20250728181228",
+    "product_url": "https://mfront.homeplus.co.kr/item?itemNo=071098806&storeType=HYPER",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "HOMEPLUS",
+    "product_name": "ThePet 諛붾Ⅸ癒밴굅由??ㅻ━怨좉뎄留?300G",
+    "ingredient_name": "怨좉뎄留?,
+    "original_price": 16100,
+    "discount_price": 12900,
+    "discount_rate": 20.0,
+    "discount_period": "6/5",
+    "image_url": "https://image.homeplus.kr/it/071098858s0320?lastmod=20250728181242",
+    "product_url": "https://mfront.homeplus.co.kr/item?itemNo=071098858&storeType=HYPER",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "HOMEPLUS",
+    "product_name": "ThePet 諛붾Ⅸ癒밴굅由??ㅻ━怨좉린?≫룷 300G",
+    "ingredient_name": "?ㅻ━怨좉린",
+    "original_price": 16100,
+    "discount_price": 12900,
+    "discount_rate": 20.0,
+    "discount_period": "8/45",
+    "image_url": "https://image.homeplus.kr/it/071098812s0320?lastmod=20250728181231",
+    "product_url": "https://mfront.homeplus.co.kr/item?itemNo=071098812&storeType=HYPER",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "HOMEPLUS",
+    "product_name": "ThePet 諛붾Ⅸ癒밴굅由?珥됱큺?쒕떗怨좉린 300G",
+    "ingredient_name": "??퀬湲?,
+    "original_price": 16100,
+    "discount_price": 12900,
+    "discount_rate": 20.0,
+    "discount_period": "6/45",
+    "image_url": "https://image.homeplus.kr/it/071098829s0320?lastmod=20250728181236",
+    "product_url": "https://mfront.homeplus.co.kr/item?itemNo=071098829&storeType=HYPER",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "HOMEPLUS",
+    "product_name": "ThePet 諛붾Ⅸ癒밴굅由?珥됱큺?쒖삤由ш퀬湲?300G",
+    "ingredient_name": "?ㅻ━怨좉린",
+    "original_price": 16100,
+    "discount_price": 12900,
+    "discount_rate": 20.0,
+    "discount_period": "7/43",
+    "image_url": "https://image.homeplus.kr/it/071098835s0320?lastmod=20250728181238",
+    "product_url": "https://mfront.homeplus.co.kr/item?itemNo=071098835&storeType=HYPER",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "HOMEPLUS",
+    "product_name": "ThePet ?뚭퀬湲곗슦??媛쒓퍕 160G",
+    "ingredient_name": "?뚭퀬湲?,
+    "original_price": 8100,
+    "discount_price": 6490,
+    "discount_rate": 20.0,
+    "discount_period": "8/202",
+    "image_url": "https://image.homeplus.kr/it/138312291s0320?lastmod=20210115211945",
+    "product_url": "https://mfront.homeplus.co.kr/item?itemNo=138312291&storeType=HYPER",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "HOMEPLUS",
+    "product_name": "ThePet ?뚭퀬湲곗슦??媛쒓퍕?ㅽ떛 160G",
+    "ingredient_name": "?뚭퀬湲?,
+    "original_price": 8100,
+    "discount_price": 6490,
+    "discount_rate": 20.0,
+    "discount_period": "7/384",
+    "image_url": "https://image.homeplus.kr/it/138312302s0320?lastmod=20210115211949",
+    "product_url": "https://mfront.homeplus.co.kr/item?itemNo=138312302&storeType=HYPER",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "HOMEPLUS",
+    "product_name": "ThePet ?곗뼱?곗쑀 媛쒓퍕?ㅽ떛 160G",
+    "ingredient_name": "?곗뼱",
+    "original_price": 8100,
+    "discount_price": 6490,
+    "discount_rate": 20.0,
+    "discount_period": "7/373",
+    "image_url": "https://image.homeplus.kr/it/138312325s0320?lastmod=20210115211957",
+    "product_url": "https://mfront.homeplus.co.kr/item?itemNo=138312325&storeType=HYPER",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "HOMEPLUS",
+    "product_name": "ThePet ?ㅻ━?곗쑀 媛쒓퍕?ㅽ떛 160G",
+    "ingredient_name": "?곗쑀",
+    "original_price": 8100,
+    "discount_price": 6490,
+    "discount_rate": 20.0,
+    "discount_period": "6/338",
+    "image_url": "https://image.homeplus.kr/it/138312348s0320?lastmod=20210115212022",
+    "product_url": "https://mfront.homeplus.co.kr/item?itemNo=138312348&storeType=HYPER",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "HOMEPLUS",
+    "product_name": "湲대끂?ㅽ뫜 ?μ뒪??李몄튂&????댁궡 10媛쒖엯",
+    "ingredient_name": "????댁궡",
+    "original_price": null,
+    "discount_price": 19800,
+    "discount_rate": null,
+    "discount_period": "0/8",
+    "image_url": "https://image.homeplus.kr/it/071059807s0320?lastmod=20250422081353",
+    "product_url": "https://mfront.homeplus.co.kr/item?itemNo=071059807&storeType=HYPER",
+    "crawled_date": "2026-05-22"
+  },
+  {
+    "market_name": "HOMEPLUS",
+    "product_name": "?붾룆 ?ㅻ쭏?댄듃由??ㅻ━留?150G",
+    "ingredient_name": "?붾룆 ?ㅻ쭏?댄듃由?,
+    "original_price": null,
+    "discount_price": 4990,
+    "discount_rate": null,
+    "discount_period": "8/62",
+    "image_url": "https://image.homeplus.kr/it/070807731s0320?lastmod=20241008081204",
+    "product_url": "https://mfront.homeplus.co.kr/item?itemNo=070807731&storeType=HYPER",
+    "crawled_date": "2026-05-22"
+  }
+]
