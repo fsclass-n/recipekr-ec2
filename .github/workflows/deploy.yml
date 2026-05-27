@@ -76,14 +76,22 @@ jobs:
             cd /home/ubuntu/recipekr-ec2
             
             # 3. GitHub Secrets 정보를 활용하여 .env 파일을 매 배포마다 안전하게 재생성 (보안 최적화)
-            echo "SPRING_PROFILES_ACTIVE=rds" > .env
+            if [ -n "${{ secrets.RDS_URL }}" ]; then
+              echo "SPRING_PROFILES_ACTIVE=rds" > .env
+              echo "RDS_URL=${{ secrets.RDS_URL }}" >> .env
+              echo "RDS_USERNAME=${{ secrets.RDS_USERNAME }}" >> .env
+              echo "RDS_PASSWORD=${{ secrets.RDS_PASSWORD }}" >> .env
+            else
+              echo "SPRING_PROFILES_ACTIVE=tidb" > .env
+              echo "TIDB_URL=${{ secrets.TIDB_URL }}" >> .env
+              echo "TIDB_USERNAME=${{ secrets.TIDB_USERNAME }}" >> .env
+              echo "TIDB_PASSWORD=${{ secrets.TIDB_PASSWORD }}" >> .env
+            fi
+            
             echo "APP_PORT=80" >> .env
             echo "JAVA_OPTS=-Xms128m -Xmx256m" >> .env
             echo "DOCKERHUB_USERNAME=${{ secrets.DOCKERHUB_USERNAME }}" >> .env
             echo "GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}" >> .env
-            echo "RDS_URL=${{ secrets.RDS_URL }}" >> .env
-            echo "RDS_USERNAME=${{ secrets.RDS_USERNAME }}" >> .env
-            echo "RDS_PASSWORD=${{ secrets.RDS_PASSWORD }}" >> .env
             
             # 3. Docker Hub 로그인 (최신 이미지 pull 권한 확보)
             echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
