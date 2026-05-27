@@ -1,4 +1,4 @@
-name: Deploy to AWS EC2 via Docker Hub
+name: EC2 + TiDB + Docker + Actions 배포 워크플로우
 
 on:
   push:
