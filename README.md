@@ -1,4 +1,4 @@
-# RecipeKR
+# RecipeKR-ec2
 
 Spring Boot와 Python AI/RPA를 함께 사용하는 레시피 추천 서비스입니다.
 
@@ -7,7 +7,7 @@ Spring Boot와 Python AI/RPA를 함께 사용하는 레시피 추천 서비스�
 실행 PC에는 JDK나 Python 라이브러리를 따로 설치하지 않아도 됩니다. Docker Desktop만 설치한 뒤 프로젝트 루트에서 실행합니다.
 
 ```bat
-start-recipekr.bat
+start-recipekr-ec2.bat
 ```
 
 또는 직접 실행할 수 있습니다.
@@ -27,7 +27,7 @@ http://localhost:8080
 Docker Desktop 없이 UI와 주요 흐름만 확인하려면 Java 21이 설치된 PC에서 실행합니다.
 
 ```bat
-start-recipekr-demo.bat
+start-recipekr-ec2-demo.bat
 ```
 
 이 모드는 `.env`, TiDB, Gemini API 키, Python RPA 없이 H2 임시 DB와 샘플 응답으로 동작합니다.

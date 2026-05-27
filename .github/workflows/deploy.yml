@@ -25,7 +25,7 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/recipekr:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/recipekr-ec2:latest
 
   deploy:
     needs: build-and-push
@@ -43,7 +43,7 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           port: 22
           source: "docker-compose.yml"
-          target: "/home/ubuntu/recipekr"
+          target: "/home/ubuntu/recipekr-ec2"
           overwrite: true
 
       - name: SSH를 통한 EC2 접속 및 배포 명령 실행
@@ -55,7 +55,7 @@ jobs:
           port: 22
           script: |
             # 1. 전송받은 폴더로 이동
-            cd /home/ubuntu/recipekr
+            cd /home/ubuntu/recipekr-ec2
             
             # 2. GitHub Secrets 정보를 활용하여 .env 파일을 매 배포마다 안전하게 재생성 (보안 최적화)
             echo "SPRING_PROFILES_ACTIVE=rds" > .env
