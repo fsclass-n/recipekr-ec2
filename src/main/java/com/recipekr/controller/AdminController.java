@@ -2,6 +2,7 @@ package com.recipekr.controller;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.recipekr.domain.User;
 import com.recipekr.repository.DiscountItemRepository;
 import com.recipekr.repository.RecipeRepository;
 import com.recipekr.repository.UserRepository;
@@ -11,8 +12,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -51,6 +52,13 @@ public class AdminController {
         }
 
         try {
+            // 사용자 목록은 항상 로드 (파이썬 오류와 무관하게)
+            try {
+                model.addAttribute("users", userRepository.findAll());
+            } catch (Exception ex) {
+                log.warn("Failed to load user list: {}", ex.getMessage());
+            }
+
             // DB 데이터 조회
             long userCount = userRepository.count();
             long discountCount = discountItemRepository.count();
@@ -152,5 +160,50 @@ public class AdminController {
         return authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .anyMatch("ROLE_ADMIN"::equals);
+    }
+
+    /**
+     * [GET] /admin/users - 사용자 목록 콘솔
+     */
+    @GetMapping("/users")
+    public String userList(Authentication authentication, Model model) {
+        if (authentication == null || !hasAdminRole(authentication)) {
+            return "redirect:/";
+        }
+        try {
+            List<User> users = userRepository.findAll();
+            model.addAttribute("users", users);
+        } catch (Exception e) {
+            log.error("User list error", e);
+            model.addAttribute("error", "사용자 목록 조회 중 오류: " + e.getMessage());
+        }
+        return "admin/dashboard";
+    }
+
+    /**
+     * [POST] /admin/users/{id}/role - 사용자 role 변경
+     */
+    @PostMapping("/users/{id}/role")
+    public String updateUserRole(
+            @PathVariable Long id,
+            @RequestParam String role,
+            Authentication authentication,
+            RedirectAttributes redirectAttributes) {
+        if (authentication == null || !hasAdminRole(authentication)) {
+            return "redirect:/";
+        }
+        try {
+            if (!role.equals("USER") && !role.equals("ADMIN")) {
+                redirectAttributes.addFlashAttribute("error", "유효하지 않은 권한입니다.");
+                return "redirect:/admin/dashboard";
+            }
+            userRepository.updateRole(id, role);
+            log.info("User role updated - id: {}, role: {}", id, role);
+            redirectAttributes.addFlashAttribute("successMessage", "사용자 권한이 " + role + "로 변경되었습니다.");
+        } catch (Exception e) {
+            log.error("Role update error", e);
+            redirectAttributes.addFlashAttribute("error", "권한 변경 실패: " + e.getMessage());
+        }
+        return "redirect:/admin/dashboard";
     }
 }
