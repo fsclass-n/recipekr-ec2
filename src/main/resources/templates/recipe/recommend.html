@@ -14,16 +14,8 @@
     <link rel="stylesheet" th:href="@{/css/recipe.css?v=3}">
     <link rel="stylesheet" th:href="@{/css/chatbot.css?v=1}">
     <style>
-        /* 레시피 추천 페이지 - 네비게이션 사각형 박스 배경 제거 */
-        @media (min-width: 992px) {
-            .desktop-nav-pill {
-                background: transparent !important;
-                background-color: transparent !important;
-                box-shadow: none !important;
-                border: none !important;
-                width: max-content !important;
-                max-width: max-content !important;
-            }
+        @media (max-width: 768px) {
+            /* 모바일에서 오프캔버스 너비 제한 유지 */
         }
     </style>
 
@@ -33,7 +25,8 @@
 <nav class="navbar navbar-expand-lg navbar-dark sticky-top" id="mainNavbar">
     <div class="container">
         <a class="navbar-brand d-flex align-items-center gap-2" th:href="@{/}">
-            <span class="brand-icon"><img src="/images/icons/plate.svg" alt="로고"></span><span class="brand-text">냉장고 레시피</span>
+            <span class="brand-icon">🍽️</span>
+            <span class="brand-text">냉장고 레시피</span>
         </a>
         <button class="navbar-toggler border-0 custom-toggler" type="button"
                 data-bs-toggle="offcanvas" data-bs-target="#navbarContent" aria-controls="navbarContent">
@@ -48,7 +41,7 @@
                 <ul class="navbar-nav desktop-nav-pill me-auto mb-2 mb-lg-0 gap-2">
                     <li class="nav-item"><a class="nav-link" th:href="@{/}"><i class="bi bi-house-door me-1"></i>홈</a></li>
                     <li class="nav-item" sec:authorize="isAuthenticated()">
-                        <a class="nav-link" th:href="@{/recipe/recommend}"><i class="bi bi-stars me-1"></i>레시피 추천</a>
+                        <a class="nav-link active" th:href="@{/recipe/recommend}"><i class="bi bi-stars me-1"></i>레시피 추천</a>
                     </li>
                 </ul>
                 <div class="d-flex flex-column flex-lg-row align-items-lg-center gap-2 mt-3 mt-lg-0 mobile-nav-actions">
