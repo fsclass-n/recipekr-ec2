@@ -10,12 +10,28 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" th:href="@{/css/global.css?v=20}">
+    <link rel="stylesheet" th:href="@{/css/global.css?v=21}">
     <link rel="stylesheet" th:href="@{/css/recipe.css?v=3}">
     <link rel="stylesheet" th:href="@{/css/chatbot.css?v=1}">
     <style>
-        @media (max-width: 768px) {
-            /* 모바일에서 오프캔버스 너비 제한 유지 */
+        /* brand-icon: Tossface 폰트 강제 주입 제외 - 이모지 정상 렌더링 */
+        .brand-icon {
+            font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', sans-serif !important;
+            font-size: 1.8rem !important;
+        }
+        /* 활성 메뉴 항목: 메인 페이지와 동일한 glassmorphism 스타일 */
+        @media (min-width: 992px) {
+            .desktop-nav-pill .nav-link.active {
+                background: rgba(255, 255, 255, 0.12) !important;
+                border: 1px solid rgba(255, 255, 255, 0.16) !important;
+                color: #ffffff !important;
+                box-shadow: 0 12px 24px rgba(0, 0, 0, 0.16) !important;
+                border-radius: 12px !important;
+            }
+        }
+        /* 모바일에서도 active 상태 유지 */
+        .nav-link.active {
+            color: #ffffff !important;
         }
     </style>
 
