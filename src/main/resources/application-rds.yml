@@ -2,7 +2,19 @@ spring:
   datasource:
     # AWS RDS MySQL 접속 정보
     # GitHub Secrets 또는 로컬 OS 환경 변수를 통해 주입받습니다.
-    url: ${RDS_URL:jdbc:mysql://localhost:3306/recipekr}
+    url: ${RDS_URL:jdbc:mysql://localhost:3306/recipekr?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=Asia/Seoul&useUnicode=true&characterEncoding=utf8mb4}
     username: ${RDS_USERNAME:root}
     password: ${RDS_PASSWORD:password}
     driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 2
+      idle-timeout: 30000
+      connection-timeout: 20000
+      max-lifetime: 1800000
+
+  # 애플리케이션 시작 시 DB 테이블 자동 생성 및 초기 데이터 주입
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:sql/schema.sql

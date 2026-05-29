@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: tidb
+    active: rds
 
   thymeleaf:
     cache: false

@@ -12,9 +12,6 @@ services:
       - JAVA_OPTS=${JAVA_OPTS:--Xms128m -Xmx256m}
       - PYTHONIOENCODING=utf-8
       - PYTHONUTF8=1
-      - TIDB_URL
-      - TIDB_USERNAME
-      - TIDB_PASSWORD
       - RDS_URL
       - RDS_USERNAME
       - RDS_PASSWORD
