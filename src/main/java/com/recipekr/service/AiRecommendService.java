@@ -41,15 +41,27 @@ public class AiRecommendService {
     }
 
     private String getPythonExecutable() {
+        // 1. 프로젝트 루트 폴더의 .venv (가상환경) 최우선 지원
+        String projectVenv = Paths.get(System.getProperty("user.dir"), ".venv", "Scripts", "python.exe").toString();
+        if (new java.io.File(projectVenv).exists()) {
+            return projectVenv;
+        }
+        // 리눅스/운영서버 배포 시 대안 (.venv/bin/python)
+        String projectVenvLinux = Paths.get(System.getProperty("user.dir"), ".venv", "bin", "python").toString();
+        if (new java.io.File(projectVenvLinux).exists()) {
+            return projectVenvLinux;
+        }
+        // 2. 프로젝트 로컬 .conda 가상환경 지원
         String projectConda = Paths.get(System.getProperty("user.dir"), ".conda", "python.exe").toString();
         if (new java.io.File(projectConda).exists()) {
             return projectConda;
         }
-        // local myenv conda environment support
+        // 3. 사용자 홈의 Conda 환경 지원
         String myenvConda = Paths.get(System.getProperty("user.home"), "anaconda3", "envs", "myenv", "python.exe").toString();
         if (new java.io.File(myenvConda).exists()) {
             return myenvConda;
         }
+        // 4. 시스템 전역 파이썬 폴백
         return "python";
     }
 

@@ -15,12 +15,11 @@ CREATE TABLE IF NOT EXISTS users (
 
     PRIMARY KEY (id),
     UNIQUE KEY uk_users_username (username),
-    UNIQUE KEY uk_users_email (email)
+    UNIQUE KEY uk_users_email (email),
+    INDEX idx_users_username (username),
+    INDEX idx_users_email (email),
+    INDEX idx_users_created_at (created_at)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='회원 정보 테이블';
-
-CREATE INDEX idx_users_username ON users (username);
-CREATE INDEX idx_users_email ON users (email);
-CREATE INDEX idx_users_created_at ON users (created_at);
 
 -- 테스트용 관리자 계정 삽입 (password: Admin1234!)
 INSERT INTO users (username, password, email, nickname, role)
