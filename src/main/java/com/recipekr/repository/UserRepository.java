@@ -64,7 +64,28 @@ public class UserRepository {
             return ps;
         }, keyHolder);
 
-        return keyHolder.getKey().longValue();
+        java.util.Map<String, Object> keys = keyHolder.getKeys();
+        if (keys != null) {
+            Object idVal = keys.get("id");
+            if (idVal == null) {
+                idVal = keys.get("ID");
+            }
+            if (idVal instanceof Number) {
+                return ((Number) idVal).longValue();
+            }
+            for (Object val : keys.values()) {
+                if (val instanceof Number) {
+                    return ((Number) val).longValue();
+                }
+            }
+        }
+        
+        try {
+            Number key = keyHolder.getKey();
+            return key != null ? key.longValue() : null;
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     /**
