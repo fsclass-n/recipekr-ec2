@@ -28,6 +28,8 @@ server:
       timeout: 30m
 
 logging:
+  charset:
+    console: UTF-8
   level:
     com.recipekr: DEBUG
     org.springframework.security: DEBUG

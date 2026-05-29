@@ -1,17 +1,17 @@
-/* ============================================================
-   냉장고 파먹기 - 글로벌 CSS 디자인 시스템
+﻿/* ============================================================
+   ?됱옣怨??뚮㉨湲?- 湲濡쒕쾶 CSS ?붿옄???쒖뒪??
    ============================================================ */
 
-/* ── 1. CSS 변수 (Design Tokens) ── */
+/* ?? 1. CSS 蹂??(Design Tokens) ?? */
 :root {
-    /* 브랜드 컬러 팔레트 */
-    --color-primary:       #FF6B35;   /* 따뜻한 오렌지 (메인) */
+    /* 釉뚮옖??而щ윭 ?붾젅??*/
+    --color-primary:       #FF6B35;   /* ?곕쑜???ㅻ젋吏 (硫붿씤) */
     --color-primary-dark:  #E55A26;
     --color-primary-light: #FF8C5A;
-    --color-secondary:     #2EC4B6;   /* 청록색 (포인트) */
-    --color-accent:        #FFE066;   /* 노란색 강조 */
+    --color-secondary:     #2EC4B6;   /* 泥?줉??(?ъ씤?? */
+    --color-accent:        #FFE066;   /* ?몃???媛뺤“ */
 
-    /* 중성 컬러 */
+    /* 以묒꽦 而щ윭 */
     --color-dark:          #0F172A;
     --color-dark-2:        #1E293B;
     --color-dark-3:        #334155;
@@ -19,18 +19,18 @@
     --color-light:         #F1F5F9;
     --color-white:         #FFFFFF;
 
-    /* 상태 컬러 */
+    /* ?곹깭 而щ윭 */
     --color-success:       #22C55E;
     --color-danger:        #EF4444;
     --color-warning:       #F59E0B;
     --color-info:          #3B82F6;
 
-    /* 그라디언트 */
+    /* 洹몃씪?붿뼵??*/
     --gradient-brand:      linear-gradient(135deg, #FF6B35 0%, #FF8C5A 50%, #2EC4B6 100%);
     --gradient-dark:       linear-gradient(180deg, #0F172A 0%, #1E293B 100%);
     --gradient-card:       linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01));
 
-    /* 타이포그래피 */
+    /* ??댄룷洹몃옒??*/
     --font-sans:           'Inter', 'Noto Sans KR', 'Tossface', -apple-system, sans-serif;
     --font-size-xs:        0.75rem;
     --font-size-sm:        0.875rem;
@@ -40,7 +40,7 @@
     --font-size-2xl:       1.5rem;
     --font-size-3xl:       1.875rem;
 
-    /* 간격 */
+    /* 媛꾧꺽 */
     --spacing-xs:          0.25rem;
     --spacing-sm:          0.5rem;
     --spacing-md:          1rem;
@@ -48,30 +48,30 @@
     --spacing-xl:          2rem;
     --spacing-2xl:         3rem;
 
-    /* 테두리 */
+    /* ?뚮몢由?*/
     --radius-sm:           0.375rem;
     --radius-md:           0.625rem;
     --radius-lg:           1rem;
     --radius-xl:           1.5rem;
     --radius-full:         9999px;
 
-    /* 그림자 */
+    /* 洹몃┝??*/
     --shadow-sm:           0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.08);
     --shadow-md:           0 4px 12px rgba(0,0,0,0.15), 0 2px 4px rgba(0,0,0,0.08);
     --shadow-lg:           0 10px 30px rgba(0,0,0,0.25), 0 4px 8px rgba(0,0,0,0.12);
     --shadow-glow:         0 0 30px rgba(255,107,53,0.3);
     --shadow-glow-teal:    0 0 30px rgba(46,196,182,0.3);
 
-    /* 트랜지션 */
+    /* ?몃옖吏??*/
     --transition-fast:     0.15s ease;
     --transition-base:     0.25s ease;
     --transition-slow:     0.4s ease;
 
-    /* 레이아웃 */
+    /* ?덉씠?꾩썐 */
     --navbar-height:       4rem;
 }
 
-/* ── 2. 글로벌 리셋 & 기본 스타일 ── */
+/* ?? 2. 湲濡쒕쾶 由ъ뀑 & 湲곕낯 ?ㅽ????? */
 *, *::before, *::after {
     box-sizing: border-box;
 }
@@ -90,6 +90,7 @@ body {
         radial-gradient(ellipse at 20% 50%, rgba(255, 107, 53, 0.05) 0%, transparent 60%),
         radial-gradient(ellipse at 80% 20%, rgba(46, 196, 182, 0.05) 0%, transparent 60%);
     min-height: 100vh;
+    min-height: 100dvh;
     display: flex;
     flex-direction: column;
     padding-top: var(--navbar-height);
@@ -105,7 +106,7 @@ main {
     flex: 1;
 }
 
-/* ── 3. 네비게이션 바 ── */
+/* ?? 3. ?ㅻ퉬寃뚯씠??諛??? */
 #mainNavbar {
     position: fixed;
     top: 0;
@@ -180,7 +181,7 @@ main {
     box-shadow: 0 16px 30px rgba(0, 0, 0, 0.18) !important;
 }
 
-/* ── 4. 버튼 커스텀 ── */
+/* ?? 4. 踰꾪듉 而ㅼ뒪? ?? */
 .btn {
     font-weight: 600;
     border-radius: var(--radius-md);
@@ -251,7 +252,7 @@ main {
     color: white;
 }
 
-/* ── 5. 카드 ── */
+/* ?? 5. 移대뱶 ?? */
 .card-dark {
     background: var(--color-dark-2);
     border: 1px solid rgba(255, 255, 255, 0.08);
@@ -273,7 +274,7 @@ main {
     border-radius: var(--radius-xl);
 }
 
-/* ── 6. 폼 스타일 ── */
+/* ?? 6. ???ㅽ????? */
 .form-control-dark {
     background: rgba(255, 255, 255, 0.05) !important;
     border: 1.5px solid rgba(255, 255, 255, 0.12) !important;
@@ -300,7 +301,7 @@ main {
     box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2) !important;
 }
 
-/* select 드롭다운 다크 스타일 (브라우저 기본 흰 배경 덮어쓰기) */
+/* select ?쒕∼?ㅼ슫 ?ㅽ겕 ?ㅽ???(釉뚮씪?곗? 湲곕낯 ??諛곌꼍 ??뼱?곌린) */
 select.form-control-dark {
     background-color: #1e293b !important;
     color: var(--color-white) !important;
@@ -325,7 +326,7 @@ select.form-control-dark option {
     letter-spacing: 0.02em;
 }
 
-/* 인풋 아이콘 그룹 */
+/* ?명뭼 ?꾩씠肄?洹몃９ */
 .input-group-dark .input-group-text {
     background: rgba(255, 255, 255, 0.06);
     border: 1.5px solid rgba(255, 255, 255, 0.12);
@@ -343,7 +344,7 @@ select.form-control-dark option {
     border-left: none !important;
 }
 
-/* ── 7. 텍스트 유틸리티 ── */
+/* ?? 7. ?띿뒪???좏떥由ы떚 ?? */
 .brand-gradient-text {
     background: var(--gradient-brand);
     -webkit-background-clip: text;
@@ -363,12 +364,12 @@ select.form-control-dark option {
     color: rgba(255, 255, 255, 0.5) !important;
 }
 
-/* ── 8. 구분선 ── */
+/* ?? 8. 援щ텇???? */
 .divider-dark {
     border-color: rgba(255, 255, 255, 0.1);
 }
 
-/* ── 9. 알림(Alert) ── */
+/* ?? 9. ?뚮┝(Alert) ?? */
 .alert-dark-success {
     background: rgba(34, 197, 94, 0.12);
     border: 1px solid rgba(34, 197, 94, 0.3);
@@ -390,21 +391,21 @@ select.form-control-dark option {
     border-radius: var(--radius-md);
 }
 
-/* ── 10. 푸터 ── */
+/* ?? 10. ?명꽣 ?? */
 .footer {
     background: rgba(15, 23, 42, 0.8);
     border-top: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .footer p, .footer .text-muted {
-    color: rgba(255, 255, 255, 0.55) !important; /* 기존 Bootstrap muted(회색)보다 밝게 */
+    color: rgba(255, 255, 255, 0.55) !important; /* 湲곗〈 Bootstrap muted(?뚯깋)蹂대떎 諛앷쾶 */
 }
 
 .footer .small {
     color: rgba(255, 255, 255, 0.38) !important;
 }
 
-/* ── 11. 배경 장식 (Decorative blobs) ── */
+/* ?? 11. 諛곌꼍 ?μ떇 (Decorative blobs) ?? */
 .bg-blob {
     position: absolute;
     border-radius: var(--radius-full);
@@ -422,7 +423,7 @@ select.form-control-dark option {
     background: var(--color-secondary);
 }
 
-/* ── 12. 배지 ── */
+/* ?? 12. 諛곗? ?? */
 .badge-brand {
     background: rgba(255, 107, 53, 0.15);
     color: var(--color-primary-light);
@@ -435,13 +436,13 @@ select.form-control-dark option {
     text-transform: uppercase;
 }
 
-/* ── 13. 로딩 스피너 커스텀 ── */
+/* ?? 13. 濡쒕뵫 ?ㅽ뵾??而ㅼ뒪? ?? */
 .spinner-brand {
     border-color: rgba(255, 107, 53, 0.25);
     border-top-color: var(--color-primary);
 }
 
-/* ── 14. 스크롤바 ── */
+/* ?? 14. ?ㅽ겕濡ㅻ컮 ?? */
 ::-webkit-scrollbar {
     width: 6px;
 }
@@ -459,7 +460,7 @@ select.form-control-dark option {
     background: var(--color-mid);
 }
 
-/* ── 15. 애니메이션 ── */
+/* ?? 15. ?좊땲硫붿씠???? */
 @keyframes fadeInUp {
     from {
         opacity: 0;
@@ -489,12 +490,12 @@ select.form-control-dark option {
     animation: float 3s ease-in-out infinite;
 }
 
-/* 딜레이 유틸리티 */
+/* ?쒕젅???좏떥由ы떚 */
 .delay-100 { animation-delay: 0.1s; }
 .delay-200 { animation-delay: 0.2s; }
 .delay-300 { animation-delay: 0.3s; }
 
-/* ── 16. 반응형 유틸리티 ── */
+/* ?? 16. 諛섏쓳???좏떥由ы떚 ?? */
 @media (max-width: 768px) {
     .brand-text {
         font-size: 1rem;
@@ -506,7 +507,7 @@ select.form-control-dark option {
     }
 }
 
-/* ── 17. 햄버거 메뉴 애니메이션 ── */
+/* ?? 17. ?꾨쾭嫄?硫붾돱 ?좊땲硫붿씠???? */
 .custom-toggler {
     width: 30px;
     height: 24px;
@@ -515,7 +516,7 @@ select.form-control-dark option {
     background: transparent;
     border: none;
     padding: 0;
-    z-index: 1055; /* 오프캔버스 위로 올라오도록 */
+    z-index: 1055; /* ?ㅽ봽罹붾쾭???꾨줈 ?щ씪?ㅻ룄濡?*/
     -webkit-tap-highlight-color: transparent;
 }
 .custom-toggler:focus,
@@ -547,7 +548,7 @@ select.form-control-dark option {
 .hamburger-icon span:nth-child(2) { top: 8px; }
 .hamburger-icon span:nth-child(3) { top: 16px; }
 
-/* 열렸을 때 X 모양으로 변환 */
+/* ?대졇????X 紐⑥뼇?쇰줈 蹂??*/
 .custom-toggler.open .hamburger-icon span:nth-child(1) {
     top: 8px;
     transform: rotate(135deg);
@@ -561,20 +562,20 @@ select.form-control-dark option {
     transform: rotate(-135deg);
 }
 
-/* 오프캔버스 메뉴 스타일 커스텀 (메가커피 스타일) */
+/* ?ㅽ봽罹붾쾭??硫붾돱 ?ㅽ???而ㅼ뒪? (硫붽?而ㅽ뵾 ?ㅽ??? */
 .offcanvas-dark {
     background-color: var(--color-dark-2) !important;
     border-left: 1px solid rgba(255, 255, 255, 0.08);
 }
 @media (max-width: 991.98px) {
     #mainNavbar {
-        z-index: 1060 !important; /* 오프캔버스(1045) 및 백드롭(1040)보다 높게 설정 */
+        z-index: 1060 !important; /* ?ㅽ봽罹붾쾭??1045) 諛?諛깅뱶濡?1040)蹂대떎 ?믨쾶 ?ㅼ젙 */
     }
     .offcanvas-dark.offcanvas-end {
         top: var(--navbar-height) !important;
         height: calc(100vh - var(--navbar-height)) !important;
         width: 250px !important;
-        background-color: #1a1a1a !important; /* 더 어두운 배경 */
+        background-color: #1a1a1a !important; /* ???대몢??諛곌꼍 */
         border-left: none;
         box-shadow: -5px 0 20px rgba(0,0,0,0.5);
     }
@@ -609,7 +610,7 @@ select.form-control-dark option {
         color: rgba(255,255,255,0.3);
     }
     
-    /* 사용자 정보 및 버튼 영역 스타일링 */
+    /* ?ъ슜???뺣낫 諛?踰꾪듉 ?곸뿭 ?ㅽ??쇰쭅 */
     .mobile-nav-actions {
         padding: 1.5rem;
         display: flex;
@@ -667,7 +668,7 @@ select.form-control-dark option {
         box-shadow: 0 12px 24px rgba(0, 0, 0, 0.16) !important;
     }
 }
-/* 모바일 푸터 카피라이트 한 줄 표기 */
+/* 紐⑤컮???명꽣 移댄뵾?쇱씠????以??쒓린 */
 @media (max-width: 575.98px) {
     .footer .small {
         font-size: 0.65rem !important;
@@ -676,7 +677,7 @@ select.form-control-dark option {
     }
 }
 
-/* 모바일 오프캔버스 50% 너비 적용 */
+/* 紐⑤컮???ㅽ봽罹붾쾭??50% ?덈퉬 ?곸슜 */
 @media (max-width: 991.98px) {
     .offcanvas-lg.offcanvas-dark {
         --bs-offcanvas-width: 50vw !important;
@@ -684,7 +685,7 @@ select.form-control-dark option {
     }
 }
 
-/* ── 18. Tossface Emoji Override ── */
+/* ?? 18. Tossface Emoji Override ?? */
 .brand-icon, .hero-emoji-main, .hero-card-icon, .feature-card-icon {
     font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', sans-serif !important;
 }
@@ -695,7 +696,7 @@ select.form-control-dark option {
     vertical-align: -0.1em;
 }
 
-/* 데스크톱 네비 pill 기본 배경 설정 */
+/* ?곗뒪?ы넲 ?ㅻ퉬 pill 湲곕낯 諛곌꼍 ?ㅼ젙 */
 .desktop-nav-pill .nav-link {
     background: transparent !important;
 }
@@ -706,66 +707,3 @@ select.form-control-dark option {
     background: rgba(255, 255, 255, 0.12) !important;
     border: 1px solid rgba(255, 255, 255, 0.16) !important;
 }
-/ * 
- 
-  % %
- 
- 1 8 . 
- 
- T o s s f a c e 
- 
- E m o j i 
- 
- O v e r r i d e 
- 
-  % %
- 
- * / 
- 
- . b r a n d - i c o n 
- 
- . h e r o - e m o j i - m a i n 
- 
- . h e r o - c a r d - i c o n 
- 
- . f e a t u r e - c a r d - i c o n 
- 
-   > >   s r c / m a i n / r e s o u r c e s / s t a t i c / c s s / g l o b a l . c s s ;   e c h o           f o n t - f a m i l y :   ' T o s s f a c e ' ,   s a n s - s e r i f   ! i m p o r t a n t ;   > >   s r c / m a i n / r e s o 
- 
- u r c e s / s t a t i c / c s s / g l o b a l . c s s ;   e c h o   
- 
- / * 
- 
- p���lб�
- 
- $�D�
- 
- p i l l 
- 
- 0���
- 
- 0���
- 
- $��
- 
- * / 
- 
- . d e s k t o p - n a v - p i l l 
- 
- . n a v - l i n k 
- 
-   b a c k g r o u n d :   t r a n s p a r e n t   ! i m p o r t a n t ;   
- 
- . d e s k t o p - n a v - p i l l 
- 
- . n a v - l i n k : h o v e r 
- 
-   b a c k g r o u n d :   r g b a ( 2 5 5 ,   2 5 5 ,   2 5 5 ,   0 . 0 6 )   ! i m p o r t a n t ;   
- 
- . d e s k t o p - n a v - p i l l 
- 
- . n a v - l i n k . a c t i v e 
- 
-   b a c k g r o u n d :   r g b a ( 2 5 5 ,   2 5 5 ,   2 5 5 ,   0 . 1 2 )   ! i m p o r t a n t ;   b o r d e r :   1 p x   s o l i d   r g b a ( 2 5 5 ,   2 5 5 ,   2 5 5 ,   0 . 1 6 )   ! i m p o r t a n t ;   
- 
- 
