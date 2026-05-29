@@ -49,6 +49,31 @@ public class AdminController {
         this.activeProfile = activeProfile;
     }
 
+    private String getPythonExecutable() {
+        // 1. 프로젝트 루트 폴더의 .venv (가상환경) 최우선 지원
+        String projectVenv = java.nio.file.Paths.get(System.getProperty("user.dir"), ".venv", "Scripts", "python.exe").toString();
+        if (new java.io.File(projectVenv).exists()) {
+            return projectVenv;
+        }
+        // 리눅스/운영서버 배포 시 대안 (.venv/bin/python)
+        String projectVenvLinux = java.nio.file.Paths.get(System.getProperty("user.dir"), ".venv", "bin", "python").toString();
+        if (new java.io.File(projectVenvLinux).exists()) {
+            return projectVenvLinux;
+        }
+        // 2. 프로젝트 로컬 .conda 가상환경 지원
+        String projectConda = java.nio.file.Paths.get(System.getProperty("user.dir"), ".conda", "python.exe").toString();
+        if (new java.io.File(projectConda).exists()) {
+            return projectConda;
+        }
+        // 3. 사용자 홈의 Conda 환경 지원
+        String myenvConda = java.nio.file.Paths.get(System.getProperty("user.home"), "anaconda3", "envs", "myenv", "python.exe").toString();
+        if (new java.io.File(myenvConda).exists()) {
+            return myenvConda;
+        }
+        // 4. 시스템 전역 파이썬 폴백
+        return "python";
+    }
+
     @GetMapping("/dashboard")
     public String dashboard(Authentication authentication, Model model) {
         // ADMIN role is required to view the dashboard.
@@ -58,15 +83,17 @@ public class AdminController {
 
         // 사용자 목록은 항상 로드 (오류와 무관하게)
         try {
-            model.addAttribute("users", userRepository.findAll());
-        } catch (Exception ex) {
-            log.warn("Failed to load user list: {}", ex.getMessage());
+            List<User> users = userRepository.findAll();
+            model.addAttribute("users", users);
+        } catch (Exception e) {
+            log.error("Failed to load users list on dashboard: {}", e.getMessage());
+            model.addAttribute("users", List.of());
         }
 
         long userCount = 0;
         long discountCount = 0;
         long recipeCount = 0;
-        List<String> ingredientsList = null;
+        List<String> ingredientsList = List.of();
 
         // DB 데이터 조회
         try {
@@ -102,7 +129,7 @@ public class AdminController {
                 File scriptFile = new File(pythonScriptPath);
                 
                 if (scriptFile.exists()) {
-                    String pythonExe = "python"; 
+                    String pythonExe = getPythonExecutable(); 
                     ProcessBuilder pb = new ProcessBuilder(pythonExe, pythonScriptPath);
                     pb.directory(new File("."));
 
