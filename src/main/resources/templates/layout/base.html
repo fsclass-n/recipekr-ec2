@@ -169,6 +169,21 @@
                     window.location.href = targetUrl;
                 }, 250);
             });
+        });
+
+        // ── 네비 스크롤 효과 ──
+        window.addEventListener('scroll', () => {
+            const scrollY = window.scrollY;
+            document.getElementById('mainNavbar').classList.toggle('scrolled', scrollY > 30);
+        });
+
+        // ── 오프캔버스 햄버거 메뉴 애니메이션 ──
+        const offcanvasNavbar = document.getElementById('navbarContent');
+        const customToggler = document.querySelector('.custom-toggler');
+        if (offcanvasNavbar && customToggler) {
+            offcanvasNavbar.addEventListener('show.bs.offcanvas', () => customToggler.classList.add('open'));
+            offcanvasNavbar.addEventListener('hide.bs.offcanvas', () => customToggler.classList.remove('open'));
+        }
     });
 </script>
 
