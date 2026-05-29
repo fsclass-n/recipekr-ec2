@@ -36,13 +36,24 @@ UI_BLACKLIST = {
     "1+1", "2+1", "1 + 1", "2 + 1",
 }
 
+# 크롤링 제외 키워드 목록 (사용자 요청)
+EXCLUDE_KEYWORDS = [
+    "접촉냉감 홈웨어",
+    "크리넥스",
+    "인정식탁",
+    "호주청정우를 사용한",
+    "철판에 두번구워",
+    "간단한 한끼"
+]
+
 
 def is_ui_text(text: str) -> bool:
-    """버튼/UI/배송 텍스트 여부 확인."""
+    """버튼/UI/배송 텍스트 여부 및 사용자 지정 제외 키워드 포함 여부 확인."""
     t = text.strip()
     return (
         t in UI_BLACKLIST
         or len(t) < 2
+        or any(keyword in t for keyword in EXCLUDE_KEYWORDS)  # 제외 키워드 필터링
         or re.match(r'^[\d,]+원', t)      # 가격으로 시작
         or re.match(r'^\d+%', t)           # 퍼센트로 시작
         or re.match(r'^\d{4}-\d{2}', t)   # 날짜로 시작
