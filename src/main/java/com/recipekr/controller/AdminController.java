@@ -8,6 +8,7 @@ import com.recipekr.repository.RecipeRepository;
 import com.recipekr.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Controller;
@@ -23,6 +24,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/admin")
@@ -34,14 +36,17 @@ public class AdminController {
     private final DiscountItemRepository discountItemRepository;
     private final RecipeRepository recipeRepository;
     private final ObjectMapper objectMapper;
+    private final String activeProfile;
 
     public AdminController(UserRepository userRepository, 
                            DiscountItemRepository discountItemRepository,
-                           RecipeRepository recipeRepository) {
+                           RecipeRepository recipeRepository,
+                           @Value("${spring.profiles.active:rds}") String activeProfile) {
         this.userRepository = userRepository;
         this.discountItemRepository = discountItemRepository;
         this.recipeRepository = recipeRepository;
         this.objectMapper = new ObjectMapper();
+        this.activeProfile = activeProfile;
     }
 
     @GetMapping("/dashboard")
@@ -51,109 +56,130 @@ public class AdminController {
             return "redirect:/";
         }
 
+        // 사용자 목록은 항상 로드 (오류와 무관하게)
         try {
-            // 사용자 목록은 항상 로드 (파이썬 오류와 무관하게)
+            model.addAttribute("users", userRepository.findAll());
+        } catch (Exception ex) {
+            log.warn("Failed to load user list: {}", ex.getMessage());
+        }
+
+        long userCount = 0;
+        long discountCount = 0;
+        long recipeCount = 0;
+        List<String> ingredientsList = null;
+
+        // DB 데이터 조회
+        try {
+            userCount = userRepository.count();
+            discountCount = discountItemRepository.count();
+            recipeCount = recipeRepository.count();
+            ingredientsList = recipeRepository.findAllIngredients();
+        } catch (Exception ex) {
+            log.error("Failed to load DB stats", ex);
+        }
+
+        // 기본 수치 및 자바 백업 데이터 바인딩
+        model.addAttribute("userCount", userCount);
+        model.addAttribute("discountCount", discountCount);
+        model.addAttribute("recipeCount", recipeCount);
+
+        List<Map<String, Object>> topIngredients = analyzeIngredientsInJava(ingredientsList);
+        model.addAttribute("topIngredients", topIngredients);
+        model.addAttribute("chartBase64", ""); // 기본값은 빈 값
+
+        // 데모 모드가 아니고 RDS/운영 환경일 경우, 파이썬 scikit-learn 분석 시도
+        if (!"demo".equals(activeProfile)) {
             try {
-                model.addAttribute("users", userRepository.findAll());
-            } catch (Exception ex) {
-                log.warn("Failed to load user list: {}", ex.getMessage());
-            }
+                Map<String, Object> inputData = new HashMap<>();
+                inputData.put("userCount", userCount);
+                inputData.put("discountCount", discountCount);
+                inputData.put("recipeCount", recipeCount);
+                inputData.put("ingredientsList", ingredientsList);
+                
+                String jsonInput = objectMapper.writeValueAsString(inputData);
 
-            // DB 데이터 조회
-            long userCount = userRepository.count();
-            long discountCount = discountItemRepository.count();
-            long recipeCount = recipeRepository.count();
-            List<String> ingredientsList = recipeRepository.findAllIngredients();
+                String pythonScriptPath = "python-ai/admin_analytics.py";
+                File scriptFile = new File(pythonScriptPath);
+                
+                if (scriptFile.exists()) {
+                    String pythonExe = "python"; 
+                    ProcessBuilder pb = new ProcessBuilder(pythonExe, pythonScriptPath);
+                    pb.directory(new File("."));
 
-            // 파이썬에 넘길 입력 데이터 준비
-            Map<String, Object> inputData = new HashMap<>();
-            inputData.put("userCount", userCount);
-            inputData.put("discountCount", discountCount);
-            inputData.put("recipeCount", recipeCount);
-            inputData.put("ingredientsList", ingredientsList);
-            
-            String jsonInput = objectMapper.writeValueAsString(inputData);
+                    Map<String, String> env = pb.environment();
+                    env.put("PYTHONIOENCODING", "utf-8");
 
-            // 파이썬 스크립트 실행
-            String pythonScriptPath = "python-ai/admin_analytics.py";
-            File scriptFile = new File(pythonScriptPath);
-            
-            if (!scriptFile.exists()) {
-                log.error("Python script not found at: {}", scriptFile.getAbsolutePath());
-                model.addAttribute("error", "분석 스크립트를 찾을 수 없습니다.");
-                return "admin/dashboard";
-            }
+                    Process process = pb.start();
 
-            // 시스템 파이썬 사용 (의존성 패키지는 시스템 전역으로 설치되어야 함)
-            String pythonExe = "python"; 
+                    try (OutputStreamWriter writer = new OutputStreamWriter(process.getOutputStream(), StandardCharsets.UTF_8)) {
+                        writer.write(jsonInput);
+                        writer.flush();
+                    }
 
-            ProcessBuilder pb = new ProcessBuilder(pythonExe, pythonScriptPath);
-            pb.directory(new File(".")); // 프로젝트 루트
+                    StringBuilder output = new StringBuilder();
+                    try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream(), StandardCharsets.UTF_8))) {
+                        String line;
+                        while ((line = reader.readLine()) != null) {
+                            output.append(line);
+                        }
+                    }
 
-            // 환경 변수 셋업: UTF-8 강제
-            Map<String, String> env = pb.environment();
-            env.put("PYTHONIOENCODING", "utf-8");
+                    StringBuilder errorOutput = new StringBuilder();
+                    try (BufferedReader errorReader = new BufferedReader(new InputStreamReader(process.getErrorStream(), StandardCharsets.UTF_8))) {
+                        String line;
+                        while ((line = errorReader.readLine()) != null) {
+                            errorOutput.append(line);
+                        }
+                    }
 
-            Process process = pb.start();
-
-            // 표준 입력(stdin)으로 JSON 쓰기
-            try (OutputStreamWriter writer = new OutputStreamWriter(process.getOutputStream(), StandardCharsets.UTF_8)) {
-                writer.write(jsonInput);
-                writer.flush();
-            }
-
-            // 파이썬 출력 읽기
-            StringBuilder output = new StringBuilder();
-            try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream(), StandardCharsets.UTF_8))) {
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    output.append(line);
+                    int exitCode = process.waitFor();
+                    if (exitCode == 0) {
+                        String jsonResult = output.toString();
+                        if (!jsonResult.trim().isEmpty()) {
+                            Map<String, Object> data = objectMapper.readValue(jsonResult, new TypeReference<Map<String, Object>>(){});
+                            if (!data.containsKey("error")) {
+                                // 파이썬 Scikit-Learn 분석 성공 시 데이터 덮어쓰기
+                                model.addAttribute("topIngredients", data.get("topIngredients"));
+                                model.addAttribute("chartBase64", data.get("chartBase64"));
+                            }
+                        }
+                    } else {
+                        log.warn("Python analytics script exited with code {}. Using Java fallback.", exitCode);
+                        log.warn("Python error output: {}", errorOutput);
+                    }
                 }
+            } catch (Exception e) {
+                log.error("Failed to run python Scikit-Learn analytics. Using Java fallback.", e);
             }
-
-            // 에러 출력 읽기
-            StringBuilder errorOutput = new StringBuilder();
-            try (BufferedReader errorReader = new BufferedReader(new InputStreamReader(process.getErrorStream(), StandardCharsets.UTF_8))) {
-                String line;
-                while ((line = errorReader.readLine()) != null) {
-                    errorOutput.append(line);
-                }
-            }
-
-            int exitCode = process.waitFor();
-            if (exitCode != 0) {
-                log.error("Python script failed with exit code: {}", exitCode);
-                log.error("Python error output: {}", errorOutput);
-                model.addAttribute("error", "데이터 분석 중 오류가 발생했습니다. (Exit Code: " + exitCode + ")");
-                return "admin/dashboard";
-            }
-
-            String jsonResult = output.toString();
-            log.debug("Python result: {}", jsonResult);
-
-            if (jsonResult.trim().isEmpty()) {
-                throw new RuntimeException("Python script returned empty output");
-            }
-
-            // JSON 파싱 후 Model에 담기
-            Map<String, Object> data = objectMapper.readValue(jsonResult, new TypeReference<Map<String, Object>>(){});
-            
-            if (data.containsKey("error")) {
-                model.addAttribute("error", data.get("error"));
-            } else {
-                model.addAttribute("userCount", data.get("userCount"));
-                model.addAttribute("discountCount", data.get("discountCount"));
-                model.addAttribute("recipeCount", data.get("recipeCount"));
-                model.addAttribute("topIngredients", data.get("topIngredients"));
-                model.addAttribute("chartBase64", data.get("chartBase64"));
-            }
-
-        } catch (Exception e) {
-            log.error("Admin dashboard error", e);
-            model.addAttribute("error", "서버 내부 오류가 발생했습니다: " + e.getMessage());
         }
 
         return "admin/dashboard";
+    }
+
+    private List<Map<String, Object>> analyzeIngredientsInJava(List<String> ingredientsList) {
+        Map<String, Integer> freqMap = new HashMap<>();
+        if (ingredientsList != null) {
+            for (String ingredients : ingredientsList) {
+                if (ingredients == null) continue;
+                String[] tokens = ingredients.split("[,\\s\\(\\)\\[\\]\\{\\}\\.\\-\\_\\+]+");
+                for (String token : tokens) {
+                    String clean = token.trim();
+                    if (clean.length() >= 1) {
+                        freqMap.put(clean, freqMap.getOrDefault(clean, 0) + 1);
+                    }
+                }
+            }
+        }
+        return freqMap.entrySet().stream()
+                .sorted((e1, e2) -> e2.getValue().compareTo(e1.getValue()))
+                .limit(10)
+                .map(e -> {
+                    Map<String, Object> item = new HashMap<>();
+                    item.put("ingredient", e.getKey());
+                    item.put("count", e.getValue());
+                    return item;
+                })
+                .collect(Collectors.toList());
     }
 
     private boolean hasAdminRole(Authentication authentication) {
